@@ -1,0 +1,15 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Standard Assets\Gameplay\GameLoop.cs">
+    <Files>
+      <File FileName="Assets\Standard Assets\Gameplay\GameLoop.cs" Line="9" Column="33" />
+      <File FileName="Assets\Standard Assets\SmoothFollow.cs" Line="34" Column="90" />
+      <File FileName="Assets\Standard Assets\Gameplay\PlayerLoop.cs" Line="58" Column="1" />
+      <File FileName="Assets\Standard Assets\Gameplay\MarkerLoop.cs" Line="22" Column="20" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
