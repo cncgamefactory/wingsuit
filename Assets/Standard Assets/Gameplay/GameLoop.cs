@@ -10,9 +10,6 @@ public class GameLoop : MonoBehaviour {
 	
 	public Transform player;
 	
-	public GameObject camera1;
-	public GameObject camera2;
-	
 	public Transform[] TERRAIN_PREFABS;
 	private ArrayList mPrefabArray; 
 	
@@ -21,6 +18,8 @@ public class GameLoop : MonoBehaviour {
 	private int lastDestroyedTerrainIndex = 0; 
 	
 	private string mGameState = "MainMenu";
+	
+	private string mCurScreen = "Screen_MainMenu";
 	
 	// Use this for initialization
 	void Start () 
@@ -129,6 +128,13 @@ public class GameLoop : MonoBehaviour {
 				iTween.RotateTo(player.gameObject,new Vector3(0,270,60), 6.0f);
 			}
 			
+			// Hack crash
+			if (Input.GetKeyDown(KeyCode.Space))
+			{
+				Vector3 force = new Vector3(0,-1000,0);
+				player.rigidbody.AddForce(force); 
+			}
+			
 			// FORCES ON GUY
 			if (Input.GetKey(KeyCode.LeftArrow))
 			{
@@ -169,16 +175,37 @@ public class GameLoop : MonoBehaviour {
 		
 		if (mGameState == "PostGame")
 		{
+			// End the screen Recording
+			if (Everyplay.SharedInstance.IsSupported())
+			{
+				Everyplay.SharedInstance.StopRecording();
+				ShowThumbnailToTheUserInTheUI(); 
+			}
+			
+			// UI
+			
 			GUI.Button(new Rect(0,50,80,80),"Twitter");
 
-			GUI.Button(new Rect(0,500,60,180),"Missions");
+			if (GUI.Button(new Rect(0,500,60,180),"Missions"))
+			{
+				SwitchState("Missions");
+			}
 			
 			GUI.TextField(new Rect(100,150,300,200), player.transform.position.z.ToString("N2") + "m");
+			
+			if (Everyplay.SharedInstance.IsSupported())
+			{
+				if(GUI.Button(new Rect(100,400,200,180),"Replay"))
+				{
+					Everyplay.SharedInstance.PlayLastRecording();
+				}
+			}
 
 			GUI.TextField(new Rect(600,150,300,200),"Leaderboards\nIanCummings -- 20000m\n" +
 				"Tim Chism -- 15000m\n" +
 				"Andrea Dailey -- 10000m");
 
+			
 			GUI.Button(new Rect(600,400,200,180),"Store");
 
 			GUI.Button(new Rect(820,400,80,80),"GameCenter");
@@ -194,6 +221,21 @@ public class GameLoop : MonoBehaviour {
 			}
 		}
 		
+		if (mGameState == "Missions")
+		{
+			Mission m1 = (Mission)PersistentData.mPersistentData.mMissionData[PersistentData.mPersistentData.mUserData.Mission1Id];
+			Mission m2 = (Mission)PersistentData.mPersistentData.mMissionData[PersistentData.mPersistentData.mUserData.Mission2Id];
+			Mission m3 = (Mission)PersistentData.mPersistentData.mMissionData[PersistentData.mPersistentData.mUserData.Mission3Id];
+
+			if(GUI.Button(new Rect(100,100,800,600),"Missions\n" +
+				m1.Name + "\n" + 
+				m2.Name + "\n" + 
+				m3.Name))
+			{
+				SwitchState("PostGame");
+			}
+		}
+		
 	}
 	
 	public void SwitchState(string stateName)
@@ -203,18 +245,23 @@ public class GameLoop : MonoBehaviour {
 
 		if (stateName == "MainMenu")
 		{
+			LoadScreen("Screen_MainMenu", true);
 			// init the player to be frozen and off screen and shit. 
 			player.rigidbody.drag = 1000.0f;
-			player.transform.position = Vector3.zero;
-						
-			// camera 1!
-			camera1.active = true;
+//			player.transform.position = Vector3.zero;
 			
 		}
 		
 		if (stateName == "Gameplay")
 		{
-			
+			// Start screen Recording
+			if (Everyplay.SharedInstance.IsSupported())
+			{
+				Everyplay.SharedInstance.StartRecording();
+			}
+
+			LoadScreen("Screen_Gameplay", true);
+
 			// let that fucker fall!
 			Vector3 cForce = new Vector3(0,DEFAULT_Y_FORCE,DEFAULT_Z_FORCE);
 			player.constantForce.force = cForce;
@@ -222,23 +269,82 @@ public class GameLoop : MonoBehaviour {
 			player.transform.position = new Vector3(0,50,0);	
 			iTween.RotateTo(player.gameObject,new Vector3(0,270,60), 0.1f);
 			
-			// camera2!
-			camera1.active = false; 
-			camera2.transform.position = player.transform.position;
 		}
+		
+		if (stateName == "Missions")
+		{
+			LoadScreen("Screen_Missions", false); 
+		}
+		
 		
 		if (stateName == "PostGame")
 		{
-			
+			LoadScreen("Screen_PostGame", false);
 		}
-		
-		// the other camera is the opposite bro. 
-		camera2.active = !camera1.active;
 
 		// now update the global var so the game loop can continue appropriately!
 		mGameState = stateName; 
 
 		pLoop.mGameState = stateName;
+
+	}
+	
+	
+	// The filepath we're getting from the thumbnail event
+	string thumbnailPath;
+	
+	/* Delegate for event (see section on getting events) */
+	public void ThumbnailReadyAtFilePathDelegate(string filePath) 
+	{
+		this.thumbnailPath = filePath;
+	}
+	
+	/* Define delegate methods */
+	// Success delegate
+	public void ThumbnailSuccess(Texture2D texture) 
+	{
+		// Yay, we have a video thumbnail, now we present it to the user
+		GameObject.Find("Polaroid").renderer.material.mainTexture = texture;
+	}
+	
+	// Error delegate
+	public void ThumbnailError(string error) 
+	{
+		// Oh noes, something went wrong
+		Debug.Log("Thumbnail loading failed: " + error);
+	}
+	
+	// Our own method that is used when the game is in a proper session to load and show the thumbnail
+	public void ShowThumbnailToTheUserInTheUI() 
+	{
+		// Load the thumbnail, using our delegates as parameter
+		Everyplay.SharedInstance.LoadThumbnailFromFilePath(this.thumbnailPath, ThumbnailSuccess, ThumbnailError);
+	}
+	
+	private void LoadScreen(string name, bool immediate)
+	{
+		float speed = 1.0f; 
+		if (immediate)
+		{
+			speed = 0.0f;
+		}
+		
+		UnloadScreen(mCurScreen, immediate);
+		mCurScreen = name;
+		GameObject screen = GameObject.Find (name);
+		iTween.MoveTo(screen, new Vector3(0,-10,0), speed);
+	}
+	
+	private void UnloadScreen(string name, bool immediate)
+	{
+		float speed = 1.0f; 
+		if (immediate)
+		{
+			speed = 0.0f;
+		}
+
+		GameObject screen = GameObject.Find (name);
+		iTween.MoveTo(screen, new Vector3(0,-110,0), speed);
 
 	}
 	

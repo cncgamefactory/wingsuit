@@ -7,6 +7,7 @@ public class PersistentData : MonoBehaviour {
 	
 	public SaveLoad mSaveLoad;
 	public UserData mUserData; 
+	public Hashtable mMissionData;
 	
 	void Awake()
 	{
@@ -25,6 +26,7 @@ public class PersistentData : MonoBehaviour {
 	{
 		mSaveLoad = new SaveLoad();
 		mUserData = mSaveLoad.LoadUser(); 
+		mMissionData = mSaveLoad.LoadMissionData(); 
 		
 		Application.LoadLevel("Gameplay");
 	}

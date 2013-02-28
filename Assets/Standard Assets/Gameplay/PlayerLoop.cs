@@ -8,6 +8,10 @@ public class PlayerLoop : MonoBehaviour {
 	
 	private float boostTimer = 0;
 	
+	private float mMaxSpeed = 0; 
+	private float mMaxHeight = 0; 
+	private float mMaxDistance = 0; 
+	
 	void Start () 
 	{
 		loop = GameObject.Find("Logic").GetComponent<GameLoop>();
@@ -38,8 +42,6 @@ public class PlayerLoop : MonoBehaviour {
 	{
 		if (mGameState == "Gameplay")
 		{
-			Debug.Log("COLLIDED WITH " + col.gameObject.name);
-			
 			// stop his downward force and make a big impact 
 			constantForce.force = Vector3.zero;
 			rigidbody.AddForceAtPosition(new Vector3(0,-40,-5), new Vector3(0,1,4), ForceMode.Impulse);
@@ -57,6 +59,19 @@ public class PlayerLoop : MonoBehaviour {
 			float mph = rigidbody.velocity.magnitude * 2.237f;
 			float height = transform.position.y * 3.28084f - 15;
 			float distance = transform.position.z;
+		
+			if (mph > mMaxSpeed)
+			{
+				mMaxSpeed = mph; 
+			}
+			if (height > mMaxHeight)
+			{
+				mMaxHeight = height; 
+			}
+			if (distance > mMaxDistance)
+			{
+				mMaxDistance = distance;
+			}
 			
 			string text = "Speed: " + mph.ToString("N2") + " mph\n" + 
 				"Altitude: " + height.ToString("N2") + " ft\n" + 
@@ -72,8 +87,137 @@ public class PlayerLoop : MonoBehaviour {
 		
 		if (mGameState == "Limbo" && rigidbody.velocity.z < 5)
 		{
-			loop.SwitchState("PostGame");
+			if (DidPassAMission())
+			{
+				loop.SwitchState("Missions");
+			}
+			else
+			{
+				loop.SwitchState("PostGame");
+			}
 		}
+	}
+	
+	private	bool DidPassAMission()
+	{
+		bool didPass = false; 
+		
+		Mission missionToCheck = PersistentData.mPersistentData.mMissionData[PersistentData.mPersistentData.mUserData.Mission1Id] as Mission;
+		if (missionToCheck != null)
+		{
+			if (CheckOperator(GetValToCheck(missionToCheck.Condition1),missionToCheck.Operator1,missionToCheck.Value1) || CheckOperator(GetValToCheck(missionToCheck.Condition2),missionToCheck.Operator2,missionToCheck.Value2))
+			{
+				Debug.Log ("Passed mission " + missionToCheck.Id + "! Unlocking mission " + missionToCheck.UnlockId);
+				PersistentData.mPersistentData.mUserData.Mission1Id = missionToCheck.UnlockId;
+				didPass = true; 
+			}
+		}
+
+		missionToCheck = PersistentData.mPersistentData.mMissionData[PersistentData.mPersistentData.mUserData.Mission2Id] as Mission;
+		if (missionToCheck != null)
+		{
+			if (CheckOperator(GetValToCheck(missionToCheck.Condition1),missionToCheck.Operator1,missionToCheck.Value1) || CheckOperator(GetValToCheck(missionToCheck.Condition2),missionToCheck.Operator2,missionToCheck.Value2))
+			{
+				Debug.Log ("Passed mission " + missionToCheck.Id + "! Unlocking mission " + missionToCheck.UnlockId);
+				PersistentData.mPersistentData.mUserData.Mission2Id = missionToCheck.UnlockId;
+				didPass = true; 
+			}
+		}
+		
+		missionToCheck = PersistentData.mPersistentData.mMissionData[PersistentData.mPersistentData.mUserData.Mission3Id] as Mission;
+		if (missionToCheck != null)
+		{
+			if (CheckOperator(GetValToCheck(missionToCheck.Condition1),missionToCheck.Operator1,missionToCheck.Value1) || CheckOperator(GetValToCheck(missionToCheck.Condition2),missionToCheck.Operator2,missionToCheck.Value2))
+			{
+				Debug.Log ("Passed mission " + missionToCheck.Id + "! Unlocking mission " + missionToCheck.UnlockId);
+				PersistentData.mPersistentData.mUserData.Mission3Id = missionToCheck.UnlockId;
+				didPass = true; 
+			}
+		}
+		
+		return didPass;
+	
+	}
+	
+	float GetValToCheck(string lhs)
+	{
+		float valToCheck = -1.0f;
+
+		switch (lhs)
+		{
+			case "distance":
+				valToCheck = mMaxDistance;
+				break;
+				
+			case "height":
+				valToCheck = mMaxHeight;
+				break;
+			
+			case "speed":
+				valToCheck = mMaxSpeed;
+				break;
+			
+			default:
+				break;
+		}
+		
+		return valToCheck;
+		
+	}
+	
+	bool CheckOperator(float lhs, string op, float rhs)
+	{
+		bool completed = false; 
+		
+		if (op != null && op != "")
+		{
+			switch (op)
+			{
+			case ">":
+				if (lhs > rhs)
+				{
+					completed = true; 
+				}
+				break;
+			case ">=":
+				if (lhs >= rhs)
+				{
+					completed = true; 
+				}
+				break;
+			case "<":
+				if (lhs < rhs)
+				{
+					completed = true; 
+				}
+				break;
+			case "<=":
+				if (lhs <= rhs)
+				{
+					completed = true; 
+				}
+				break;
+			case "!=":
+				if (lhs != rhs)
+				{
+					completed = true; 
+				}
+				break;
+			case "=":
+			case "==":
+				if (lhs == rhs)
+				{
+					completed = true; 
+				}
+				break;
+			default:
+				break;
+			}
+			
+		}
+		
+		
+		return completed;
 	}
 	
 	public void AddBoost(float time)

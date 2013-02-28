@@ -5,7 +5,7 @@
 	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 	<ProductVersion>10.0.20506</ProductVersion>
 	<SchemaVersion>2.0</SchemaVersion>
-	<ProjectGuid>{DE115AEC-5FB8-4F22-4604-11E3EC0E43E6}</ProjectGuid>
+	<ProjectGuid>{9895B6AD-0F0A-EA84-F19D-69C622F897C9}</ProjectGuid>
 	<OutputType>Library</OutputType>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<RootNamespace></RootNamespace>
@@ -44,6 +44,9 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Plugins\Everyplay\Scripts\Everyplay.cs" />
+     <Compile Include="Assets\Plugins\Everyplay\Scripts\EveryplayMiniJSON.cs" />
+     <Compile Include="Assets\Plugins\Everyplay\Scripts\EveryplayTest.cs" />
      <Compile Include="Assets\Plugins\iTween\Plugins\iTween.cs" />
      <Compile Include="Assets\Plugins\iTween\Sample\MoveSample.cs" />
      <Compile Include="Assets\Plugins\iTween\Sample\RotateSample.cs" />
@@ -51,12 +54,14 @@
      <Compile Include="Assets\Standard Assets\Gameplay\GameLoop.cs" />
      <Compile Include="Assets\Standard Assets\Gameplay\MarkerLoop.cs" />
      <Compile Include="Assets\Standard Assets\Gameplay\PlayerLoop.cs" />
+     <Compile Include="Assets\Standard Assets\Helpers\Mission.cs" />
      <Compile Include="Assets\Standard Assets\Helpers\PersistentData.cs" />
      <Compile Include="Assets\Standard Assets\Helpers\SaveLoad.cs" />
      <Compile Include="Assets\Standard Assets\Helpers\UserData.cs" />
      <Compile Include="Assets\Standard Assets\SmoothFollow.cs" />
      <None Include="Assets\Plugins\iTween\ReadMe!\ReadMe!.txt" />
      <None Include="Assets\Resources\Skyboxes\_skybox info.txt" />
+     <None Include="Assets\missions.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
