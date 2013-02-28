@@ -15,16 +15,16 @@ public class MarkerLoop : MonoBehaviour {
 	
 	void OnTriggerEnter(Collider col)
 	{
-		Debug.Log("Hey I collided with " + col.name);
 		if (col.name == "Player")
 		{
 			PlayerLoop pLoop = col.GetComponent<PlayerLoop>();
-			pLoop.AddBoost(4.5f);
+			pLoop.AddHeightBoost(4.5f);
+//			Debug.Log("HEIGHT BOOST!");
 			
 			for(int i = 0; i < transform.GetChildCount(); i++)
 			{
 				GameObject go = transform.GetChild(i).gameObject;
-				go.renderer.material.color = Color.blue;
+				go.renderer.material.color = Color.white;
 			}
 		}
 	}

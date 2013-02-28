@@ -6,6 +6,7 @@ public class GameLoop : MonoBehaviour {
 	public float MAX_X_FORCE = 3.0f;
 	public float DEFAULT_Y_FORCE = 7.0f;
 	public float DEFAULT_Z_FORCE = 100.0f;
+	public float BOOST_Z_FORCE = 150.0f;
 	public float BOOST_Y_FORCE = 14.0f;
 	
 	public Transform player;
@@ -38,20 +39,22 @@ public class GameLoop : MonoBehaviour {
 			mPrefabArray.Add(TERRAIN_PREFABS[i]);
 		}
 		
-		mPrefabArray = ShuffleArrayList(mPrefabArray);
+		TERRAIN_PREFABS = ShufflePrefabs(mPrefabArray);
 		
 		// pull 3 of the prefabs out to make the first 3 segments. 
 		for (int i = 0; i < 3; i++)
 		{
 			Vector3 position = Vector3.zero;
 			position.z = 1000 * i;
-			Instantiate(mPrefabArray[i] as Transform, position, Quaternion.identity);
+			Transform newTerrain = Instantiate(TERRAIN_PREFABS[i], position, Quaternion.identity) as Transform;
+			newTerrain.name = "gen_terrain_" + terrainCounter;
+
 			terrainCounter++;
 			
 			// don't generate any balloon things in the first terrain piece
 			if (i > 0)
 			{
-				GenerateMarkers((int)position.z);
+				GenerateMarkers((int)position.z, newTerrain);
 			}
 		}
 		
@@ -74,28 +77,57 @@ public class GameLoop : MonoBehaviour {
 		Vector3 position = Vector3.zero;
 		position.z = 1000 * terrainCounter;
 		
-		Instantiate(mPrefabArray[i] as Transform, position, Quaternion.identity);
+		Transform newTerrain = Instantiate(TERRAIN_PREFABS[i], position, Quaternion.identity) as Transform;
+		newTerrain.name = "gen_terrain_" + terrainCounter;
 		terrainCounter++;
 		
-		GenerateMarkers((int)position.z);
+		GenerateMarkers((int)position.z, newTerrain);
+		
+		if (terrainCounter > 4)
+		{
+			GameObject terrainToKill = GameObject.Find("gen_terrain_" + (terrainCounter - 5));
+			Destroy(terrainToKill);
+		}
 	}
 	
-	private void GenerateMarkers(int startZ)
+	private void GenerateMarkers(int startZ, Transform myParent)
 	{
+		int xPos = 0;
+		
+		int numMarkers = 0;
+		int numBoosters = 0; 
+		
 		for (int j = startZ; j < (startZ + 1000); j++)
 		{
-			int xPos = Random.Range(-120,120);
+			xPos = Random.Range(-120,120);
 			GameObject marker = (GameObject)Instantiate(Resources.Load ("Marker"));
-			marker.transform.parent = gameObject.transform;
+			marker.transform.parent = myParent;
 			marker.transform.position = new Vector3(xPos, 0, j); 
-			j+= Random.Range(50,200);
+			// thin out the height boosters the farther we go
+			int min = 50 + (terrainCounter * 10);
+			int max = 200 + (terrainCounter * 10);
+			j+= Random.Range(min, max);
+			numMarkers++;
 		}
 		
+		for (int i = startZ; i < (startZ + 1000); i++)
+		{
+			xPos = Random.Range(-120,120);
+			GameObject booster = (GameObject)Instantiate(Resources.Load ("Booster"));
+			booster.transform.parent = myParent;
+			booster.transform.position = new Vector3(xPos, player.transform.position.y - 20, i); 
+			i+= Random.Range(300,800);
+			numBoosters++;
+		}
+		
+		Debug.Log("Generated " + numMarkers + " markers and " + numBoosters + " boosters for " + myParent.name);
 	}
 	
-	private ArrayList ShuffleArrayList(ArrayList source)
+	private Transform[] ShufflePrefabs(ArrayList source)
 	{
 		ArrayList sortedList = new ArrayList(); 
+		
+		Transform[] sortedPrefabs = new Transform[source.Count];
 		
     	while (source.Count > 0)
     	{
@@ -103,8 +135,13 @@ public class GameLoop : MonoBehaviour {
         	sortedList.Add(source[position]);
         	source.RemoveAt(position);
     	}
+		
+		for(int i=0; i<sortedList.Count; i++)
+		{
+			sortedPrefabs[i] = (Transform)sortedList[i];
+		}
 
-    	return sortedList;
+    	return sortedPrefabs;
 	}
 	
 	// Update is called once per frame
@@ -129,13 +166,13 @@ public class GameLoop : MonoBehaviour {
 			}
 			
 			// Hack crash
-			if (Input.GetKeyDown(KeyCode.Space))
+			if (Input.GetKeyDown(KeyCode.A))
 			{
 				Vector3 force = new Vector3(0,-1000,0);
 				player.rigidbody.AddForce(force); 
 			}
 			
-			// FORCES ON GUY
+			// [DEBUG] FORCES ON GUY
 			if (Input.GetKey(KeyCode.LeftArrow))
 			{
 				Vector3 force = mPlayerForce.force;
@@ -160,84 +197,21 @@ public class GameLoop : MonoBehaviour {
 				force.y = DEFAULT_Y_FORCE;
 				mPlayerForce.force = force;
 			}
+			if (Input.GetKey(KeyCode.Space))
+			{
+				Vector3 force = mPlayerForce.force;
+				force.z = BOOST_Z_FORCE;
+				mPlayerForce.force = force;
+			}
+			if (Input.GetKey(KeyCode.LeftShift))
+			{
+				Vector3 force = mPlayerForce.force;
+				force.z = DEFAULT_Z_FORCE;
+				mPlayerForce.force = force;
+			}
 		}
 	}
-	
-	void OnGUI()
-	{
-		if (mGameState == "MainMenu")
-		{
-			if (GUI.Button(new Rect(150,400,200,80),"START"))
-			{
-				SwitchState("Gameplay");
-			}
-		}
-		
-		if (mGameState == "PostGame")
-		{
-			// End the screen Recording
-			if (Everyplay.SharedInstance.IsSupported())
-			{
-				Everyplay.SharedInstance.StopRecording();
-				ShowThumbnailToTheUserInTheUI(); 
-			}
-			
-			// UI
-			
-			GUI.Button(new Rect(0,50,80,80),"Twitter");
 
-			if (GUI.Button(new Rect(0,500,60,180),"Missions"))
-			{
-				SwitchState("Missions");
-			}
-			
-			GUI.TextField(new Rect(100,150,300,200), player.transform.position.z.ToString("N2") + "m");
-			
-			if (Everyplay.SharedInstance.IsSupported())
-			{
-				if(GUI.Button(new Rect(100,400,200,180),"Replay"))
-				{
-					Everyplay.SharedInstance.PlayLastRecording();
-				}
-			}
-
-			GUI.TextField(new Rect(600,150,300,200),"Leaderboards\nIanCummings -- 20000m\n" +
-				"Tim Chism -- 15000m\n" +
-				"Andrea Dailey -- 10000m");
-
-			
-			GUI.Button(new Rect(600,400,200,180),"Store");
-
-			GUI.Button(new Rect(820,400,80,80),"GameCenter");
-			
-			if (GUI.Button(new Rect(820,500,80,80),"Home"))
-			{
-				SwitchState("MainMenu");
-			}
-
-			if (GUI.Button(new Rect(600,600,300,120),"Play Again"))
-			{
-				SwitchState("Gameplay");
-			}
-		}
-		
-		if (mGameState == "Missions")
-		{
-			Mission m1 = (Mission)PersistentData.mPersistentData.mMissionData[PersistentData.mPersistentData.mUserData.Mission1Id];
-			Mission m2 = (Mission)PersistentData.mPersistentData.mMissionData[PersistentData.mPersistentData.mUserData.Mission2Id];
-			Mission m3 = (Mission)PersistentData.mPersistentData.mMissionData[PersistentData.mPersistentData.mUserData.Mission3Id];
-
-			if(GUI.Button(new Rect(100,100,800,600),"Missions\n" +
-				m1.Name + "\n" + 
-				m2.Name + "\n" + 
-				m3.Name))
-			{
-				SwitchState("PostGame");
-			}
-		}
-		
-	}
-	
 	public void SwitchState(string stateName)
 	{
 		// let the player know too
@@ -279,9 +253,17 @@ public class GameLoop : MonoBehaviour {
 		
 		if (stateName == "PostGame")
 		{
+			// End the screen Recording
+			if (Everyplay.SharedInstance.IsSupported() && Everyplay.SharedInstance.IsRecording())
+			{
+				Everyplay.SharedInstance.StopRecording();
+				ShowThumbnailToTheUserInTheUI(); 
+			}
+
 			LoadScreen("Screen_PostGame", false);
 		}
 
+		
 		// now update the global var so the game loop can continue appropriately!
 		mGameState = stateName; 
 
@@ -304,7 +286,7 @@ public class GameLoop : MonoBehaviour {
 	public void ThumbnailSuccess(Texture2D texture) 
 	{
 		// Yay, we have a video thumbnail, now we present it to the user
-		GameObject.Find("Polaroid").renderer.material.mainTexture = texture;
+		GameObject.Find("btn_Polaroid").renderer.material.mainTexture = texture;
 	}
 	
 	// Error delegate
@@ -323,7 +305,7 @@ public class GameLoop : MonoBehaviour {
 	
 	private void LoadScreen(string name, bool immediate)
 	{
-		float speed = 1.0f; 
+		float speed = 0.5f; 
 		if (immediate)
 		{
 			speed = 0.0f;
@@ -337,7 +319,7 @@ public class GameLoop : MonoBehaviour {
 	
 	private void UnloadScreen(string name, bool immediate)
 	{
-		float speed = 1.0f; 
+		float speed = 0.5f; 
 		if (immediate)
 		{
 			speed = 0.0f;

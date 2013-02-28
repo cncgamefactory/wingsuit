@@ -5,7 +5,7 @@
 	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 	<ProductVersion>10.0.20506</ProductVersion>
 	<SchemaVersion>2.0</SchemaVersion>
-	<ProjectGuid>{C9419A71-3808-B8FF-E5E3-6D30AAAD1A8E}</ProjectGuid>
+	<ProjectGuid>{84318A29-BCBA-789D-0F81-2395E7E30193}</ProjectGuid>
 	<OutputType>Library</OutputType>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<RootNamespace></RootNamespace>
@@ -44,16 +44,14 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\iTween\Plugins\iTween.cs" />
-     <Compile Include="Assets\iTween\Sample\MoveSample.cs" />
-     <Compile Include="Assets\iTween\Sample\RotateSample.cs" />
-     <Compile Include="Assets\iTween\Sample\SampleInfo.cs" />
-     <None Include="Assets\iTween\ReadMe!\ReadMe!.txt" />
-     <None Include="Assets\Standard Assets\Skyboxes\_skybox info.txt" />
+     <Compile Include="Assets\NewBehaviourScript.cs" />
+     <None Include="Assets\Plugins\iTween\ReadMe!\ReadMe!.txt" />
+     <None Include="Assets\Resources\_Skyboxes\_skybox info.txt" />
+     <None Include="Assets\missions.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass-vs.csproj">
-      <Project>{DE115AEC-5FB8-4F22-4604-11E3EC0E43E6}</Project>      <Name>Assembly-CSharp-firstpass-vs</Name>    </ProjectReference>
+      <Project>{9895B6AD-0F0A-EA84-F19D-69C622F897C9}</Project>      <Name>Assembly-CSharp-firstpass-vs</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

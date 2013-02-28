@@ -6,7 +6,8 @@ public class PlayerLoop : MonoBehaviour {
 	public string mGameState = "MainMenu";
 	private GameLoop loop; 
 	
-	private float boostTimer = 0;
+	private float heightBoostTimer = 0;
+	private float speedBoostTimer = 0;
 	
 	private float mMaxSpeed = 0; 
 	private float mMaxHeight = 0; 
@@ -20,21 +21,43 @@ public class PlayerLoop : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		if (boostTimer > 0)
+		if (mGameState == "Gameplay")
 		{
-			Vector3 force = constantForce.force;
-			force.y = loop.BOOST_Y_FORCE;
-			constantForce.force = force;
-
-			boostTimer -= Time.fixedDeltaTime;
-		}
-		if (boostTimer < 0)
-		{
-			boostTimer = 0; 
-
-			Vector3 force = constantForce.force;
-			force.y = loop.DEFAULT_Y_FORCE;
-			constantForce.force = force;
+			// HEIGHT!
+			if (heightBoostTimer > 0)
+			{
+				Vector3 force = constantForce.force;
+				force.y = loop.BOOST_Y_FORCE;
+				constantForce.force = force;
+	
+				heightBoostTimer -= Time.fixedDeltaTime;
+			}
+			if (heightBoostTimer < 0)
+			{
+				heightBoostTimer = 0; 
+	
+				Vector3 force = constantForce.force;
+				force.y = loop.DEFAULT_Y_FORCE;
+				constantForce.force = force;
+			}
+			
+			// SPEED!
+			if (speedBoostTimer > 0)
+			{
+				Vector3 force = constantForce.force;
+				force.z = loop.BOOST_Z_FORCE;
+				constantForce.force = force;
+	
+				speedBoostTimer -= Time.fixedDeltaTime;
+			}
+			if (speedBoostTimer < 0)
+			{
+				speedBoostTimer = 0; 
+	
+				Vector3 force = constantForce.force;
+				force.z = loop.DEFAULT_Z_FORCE;
+				constantForce.force = force;
+			}			
 		}
 	}
 	
@@ -220,8 +243,13 @@ public class PlayerLoop : MonoBehaviour {
 		return completed;
 	}
 	
-	public void AddBoost(float time)
+	public void AddHeightBoost(float time)
 	{
-		boostTimer += time; 
+		heightBoostTimer += time; 
+	}
+	
+	public void AddSpeedBoost(float time)
+	{
+		speedBoostTimer += time; 
 	}
 }

@@ -51,6 +51,7 @@
      <Compile Include="Assets\Plugins\iTween\Sample\MoveSample.cs" />
      <Compile Include="Assets\Plugins\iTween\Sample\RotateSample.cs" />
      <Compile Include="Assets\Plugins\iTween\Sample\SampleInfo.cs" />
+     <Compile Include="Assets\Standard Assets\Gameplay\BoostLoop.cs" />
      <Compile Include="Assets\Standard Assets\Gameplay\GameLoop.cs" />
      <Compile Include="Assets\Standard Assets\Gameplay\MarkerLoop.cs" />
      <Compile Include="Assets\Standard Assets\Gameplay\PlayerLoop.cs" />
@@ -58,9 +59,12 @@
      <Compile Include="Assets\Standard Assets\Helpers\PersistentData.cs" />
      <Compile Include="Assets\Standard Assets\Helpers\SaveLoad.cs" />
      <Compile Include="Assets\Standard Assets\Helpers\UserData.cs" />
+     <Compile Include="Assets\Standard Assets\Screens\UI_MainMenu.cs" />
+     <Compile Include="Assets\Standard Assets\Screens\UI_Missions.cs" />
+     <Compile Include="Assets\Standard Assets\Screens\UI_PostGame.cs" />
      <Compile Include="Assets\Standard Assets\SmoothFollow.cs" />
      <None Include="Assets\Plugins\iTween\ReadMe!\ReadMe!.txt" />
-     <None Include="Assets\Resources\Skyboxes\_skybox info.txt" />
+     <None Include="Assets\Resources\_Skyboxes\_skybox info.txt" />
      <None Include="Assets\missions.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
