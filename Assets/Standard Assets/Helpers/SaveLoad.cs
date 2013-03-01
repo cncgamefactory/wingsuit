@@ -5,6 +5,13 @@ using PlayerPrefs = PreviewLabs.PlayerPrefs;
 
 public class SaveLoad  
 {
+	private TextAsset missionTextAsset;
+	
+	public void SetMissionTextAsset(TextAsset ta)
+	{
+		missionTextAsset = ta; 
+	}
+	
 	public UserData LoadUser()
 	{
 		UserData curUser = new UserData();
@@ -95,11 +102,9 @@ public class SaveLoad
 	{
 		Hashtable missions = new Hashtable(); 
 		
-		string dataPath = Application.dataPath;
-		string fileName = dataPath + "/missions.txt";
-		Debug.Log ("Loading " + fileName + " from disc.");
+		Debug.Log ("Loading missions: " + missionTextAsset.name);
 		
-		StreamReader sr = File.OpenText(fileName); 
+		StringReader sr = new StringReader(missionTextAsset.text); 
 		string line = sr.ReadLine();
 		
 		while (line != null)

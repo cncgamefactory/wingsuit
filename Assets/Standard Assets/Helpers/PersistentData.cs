@@ -8,7 +8,9 @@ public class PersistentData : MonoBehaviour {
 	public SaveLoad mSaveLoad;
 	public UserData mUserData; 
 	public Hashtable mMissionData;
-	
+
+	public TextAsset MISSION_TEXT_ASSET;
+
 	void Awake()
 	{
 		if (mPersistentData != null && mPersistentData != this)
@@ -25,6 +27,7 @@ public class PersistentData : MonoBehaviour {
 	void Start () 
 	{
 		mSaveLoad = new SaveLoad();
+		mSaveLoad.SetMissionTextAsset(MISSION_TEXT_ASSET); 
 		mUserData = mSaveLoad.LoadUser(); 
 		mMissionData = mSaveLoad.LoadMissionData(); 
 		

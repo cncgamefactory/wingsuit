@@ -69,7 +69,7 @@
      <None Include="Assets\Standard Assets\WebShit\crossdomain.xml" />
      <None Include="Assets\Plugins\iTween\ReadMe!\ReadMe!.txt" />
      <None Include="Assets\Resources\_Skyboxes\_skybox info.txt" />
-     <None Include="Assets\missions.txt" />
+     <None Include="Assets\Resources\missions.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
