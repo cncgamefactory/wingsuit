@@ -31,13 +31,9 @@ public class UI_MainMenu : MonoBehaviour {
 	
 	private void ProcessMouseClick(GameObject clicked)
 	{
-		switch (clicked.name)
+		if (clicked.name.Contains("mainmenu"))
 		{
-			case "btn_Start":
-				Bounce (clicked, "Gameplay");
-				break;
-			default:
-				break;
+			DelayedSwitch("Gameplay");
 		}
 	}
 	

@@ -247,7 +247,12 @@ public class GameLoop : MonoBehaviour {
 		
 		if (stateName == "Missions")
 		{
-			LoadScreen("Screen_Missions", false); 
+			// with the mission data, since it has special shit, we have to call and refresh it. 
+			GameObject screenObj = GameObject.Find ("Screen_Missions");
+			UI_Missions script = screenObj.GetComponent<UI_Missions>();
+			script.RefreshMissionData(); 
+			Hashtable myhash = iTween.Hash("time",.5f,"y",-10,"onComplete","OnScreenLoaded","onCompleteTarget",screenObj);
+			LoadScreen("Screen_Missions", myhash); 
 		}
 		
 		
@@ -328,6 +333,20 @@ public class GameLoop : MonoBehaviour {
 		GameObject screen = GameObject.Find (name);
 		iTween.MoveTo(screen, new Vector3(0,-110,0), speed);
 
+	}
+		
+	private void LoadScreen(string name, Hashtable hash)
+	{
+		UnloadScreen(mCurScreen);
+		mCurScreen = name;
+		GameObject screen = GameObject.Find (name);
+		iTween.MoveTo(screen, hash);
+	}
+	
+	private void UnloadScreen(string name)
+	{
+		GameObject screen = GameObject.Find (name);
+		iTween.MoveTo(screen, new Vector3(0,-110,0), 1.0f);
 	}
 	
 }

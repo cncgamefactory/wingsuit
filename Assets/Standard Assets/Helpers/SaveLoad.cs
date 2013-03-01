@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.IO;
+using PlayerPrefs = PreviewLabs.PlayerPrefs;
 
 public class SaveLoad  
 {
@@ -8,28 +9,85 @@ public class SaveLoad
 	{
 		UserData curUser = new UserData();
 	
-		// if !file exists
-		curUser = CreateEmptyUser(); 
+		// force new user every time
+		bool debug = true;
+		if(debug)
+		{
+			PlayerPrefs.DeleteAll();
+		}
 		
-		// else
-		//curUser = Serialize(file);
+		// if !file exists
+		if (PlayerPrefs.HasKey("id"))
+		{
+			curUser = LoadExistingUserData();
+		}
+		else
+		{
+			curUser = CreateEmptyUser(); 
+		}
 		
 		return curUser; 
 	}
 	
 	private UserData CreateEmptyUser()
 	{
+		Debug.Log("CREATING DEFAULT USER PREFS");
+
 		UserData empty = new UserData(); 
 		empty.Id = "fakeuser123";
 		empty.Email = "no@thanks.com";
 		empty.Mission1Id = "0";
 		empty.Mission2Id = "1000";
 		empty.Mission3Id = "2000";
+		empty.PrevMission1Id = empty.Mission1Id;
+		empty.PrevMission2Id = empty.Mission2Id;
+		empty.PrevMission3Id = empty.Mission3Id;
+		empty.BestDistance = 0;
+		empty.BestHeight = 0;
+		empty.BestSpeed = 0; 
 		return empty; 
+	}
+	
+	private UserData LoadExistingUserData()
+	{
+		Debug.Log("LOADING EXISTING USER PREFS");
+
+		UserData exUser = new UserData(); 
+		
+		exUser.Id = PlayerPrefs.GetString("id");
+		exUser.Email = PlayerPrefs.GetString("email");
+		exUser.Mission1Id = PlayerPrefs.GetString("m1");
+		exUser.Mission2Id = PlayerPrefs.GetString("m2");
+		exUser.Mission3Id = PlayerPrefs.GetString("m3");
+		exUser.PrevMission1Id = PlayerPrefs.GetString("prevm1");
+		exUser.PrevMission2Id = PlayerPrefs.GetString("prevm2");
+		exUser.PrevMission3Id = PlayerPrefs.GetString("prevm3");
+		exUser.BestDistance = PlayerPrefs.GetFloat("bestdistance");
+		exUser.BestHeight = PlayerPrefs.GetFloat("bestheight");
+		exUser.BestSpeed = PlayerPrefs.GetFloat("bestspeed");
+		
+		return exUser;
+		
 	}
 	
 	public bool SaveUser(UserData uData)
 	{
+		Debug.Log("SAVING USER PREFS");
+
+		PlayerPrefs.SetString("id",uData.Id);
+		PlayerPrefs.SetString ("email", uData.Email);
+		PlayerPrefs.SetString("m1",uData.Mission1Id);
+		PlayerPrefs.SetString("m2",uData.Mission2Id);
+		PlayerPrefs.SetString("m3",uData.Mission3Id);
+		PlayerPrefs.SetString("prevm1",uData.PrevMission1Id);
+		PlayerPrefs.SetString("prevm2",uData.PrevMission2Id);
+		PlayerPrefs.SetString("prevm3",uData.PrevMission3Id);
+		PlayerPrefs.SetFloat("bestheight",uData.BestHeight);
+		PlayerPrefs.SetFloat("bestdistance",uData.BestDistance);
+		PlayerPrefs.SetFloat("bestspeed",uData.BestSpeed);
+		
+		PlayerPrefs.Flush();
+		
 		return true; 
 	}
 	

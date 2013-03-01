@@ -1,6 +1,7 @@
 0|Fly more than 100 meters|distance|>|100||||||1
-1|Fly more than 200 meters|distance|>|200||||||
+1|Fly more than 200 meters|distance|>|200||||||9999
 1000|Reach an altitude of 100 ft|height|>|100||||||1001
-1001|Reach an altitude of 150 ft|height|>|150||||||
+1001|Reach an altitude of 150 ft|height|>|150||||||9999
 2000|Break the 200 mph barrier|speed|>|200||||||2001
-2001|Reach a speed of 210 mph|speed|>|210||||||
+2001|Reach a speed of 210 mph|speed|>|210||||||9999
+9999|All Missions Complete!|distance|<|-100000||||||9999
