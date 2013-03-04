@@ -1,6 +1,19 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Standard Assets\Helpers\FontColor.cs">
+    <Files>
+      <File FileName="Assets\Standard Assets\Screens\UI_Gameplay.cs" Line="1" Column="1" />
+      <File FileName="Assets\Standard Assets\Gameplay\GameLoop.cs" Line="1" Column="1" />
+      <File FileName="Assets\Standard Assets\Gameplay\PlayerLoop.cs" Line="1" Column="1" />
+      <File FileName="Assets\Standard Assets\Gameplay\MarkerLoop.cs" Line="1" Column="1" />
+      <File FileName="Assets\Standard Assets\Helpers\PersistentData.cs" Line="1" Column="1" />
+      <File FileName="Assets\Standard Assets\Helpers\SaveLoad.cs" Line="1" Column="1" />
+      <File FileName="Assets\Standard Assets\Screens\UI_Missions.cs" Line="1" Column="1" />
+      <File FileName="Assets\Standard Assets\Screens\UI_PostGame.cs" Line="1" Column="1" />
+      <File FileName="Assets\Resources\missions.txt" Line="1" Column="1" />
+      <File FileName="Assets\Standard Assets\Helpers\FontColor.cs" Line="13" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

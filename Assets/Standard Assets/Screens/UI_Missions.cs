@@ -26,6 +26,8 @@ public class UI_Missions : MonoBehaviour {
 	
 	float secondsToWait = 0.0f;
 	
+	int numTransitionsToWaitFor = 0; 
+	
 	// Use this for initialization
 	void Start () 
 	{
@@ -34,6 +36,8 @@ public class UI_Missions : MonoBehaviour {
 		placement1 = new Vector3(-0.092743f,8.229965f,0);
 		placement2 = new Vector3(-0.092743f,4.12f,0);
 		placement3 = new Vector3(-0.092743f,-.02f,0);
+
+		transform.Find("btn_Okay").gameObject.active = false; 		
 	}
 	
 	
@@ -76,7 +80,10 @@ public class UI_Missions : MonoBehaviour {
 		switch (clicked.name)
 		{
 			case "btn_Okay":
-				Bounce (clicked, "PostGame");
+				if(numTransitionsToWaitFor == 0)
+				{	
+					Bounce (clicked, "PostGame");
+				}	
 				break;
 			default:
 				break;
@@ -121,7 +128,9 @@ public class UI_Missions : MonoBehaviour {
 		m2Btn.transform.localPosition = new Vector3(placement2.x+30,placement2.y, placement2.z);
 		m3Btn.transform.localPosition = new Vector3(placement3.x+30,placement3.y, placement3.z);
 		secondsToWait = .5f;
-		
+
+		transform.Find("btn_Okay").gameObject.active = false; 		
+
 		
 	}
 	
@@ -132,8 +141,11 @@ public class UI_Missions : MonoBehaviour {
 		
 		bool needSave = false; 
 		
+		numTransitionsToWaitFor = 0;
+		
 		if (m1.Id != prev_m1.Id)
 		{
+			numTransitionsToWaitFor++; 
 			StartCoroutine(TransitionNewMission(prevm1Btn,m1Btn));
 			PersistentData.mPersistentData.mUserData.PrevMission1Id = m1.Id;
 			needSave = true; 
@@ -141,6 +153,7 @@ public class UI_Missions : MonoBehaviour {
 
 		if (m2.Id != prev_m2.Id)
 		{
+			numTransitionsToWaitFor++; 
 			StartCoroutine(TransitionNewMission(prevm2Btn,m2Btn));
 			PersistentData.mPersistentData.mUserData.PrevMission2Id = m2.Id;
 			needSave = true; 
@@ -148,6 +161,7 @@ public class UI_Missions : MonoBehaviour {
 		
 		if (m3.Id != prev_m3.Id)
 		{
+			numTransitionsToWaitFor++; 
 			StartCoroutine(TransitionNewMission(prevm3Btn,m3Btn));
 			PersistentData.mPersistentData.mUserData.PrevMission3Id = m3.Id;
 			needSave = true; 
@@ -156,6 +170,12 @@ public class UI_Missions : MonoBehaviour {
 		if (needSave)
 		{
 			PersistentData.mPersistentData.mSaveLoad.SaveUser(PersistentData.mPersistentData.mUserData);
+		}
+
+		// if no transitions showed up then we can show it on load. 
+		if(numTransitionsToWaitFor == 0)
+		{
+			transform.Find("btn_Okay").gameObject.active = true; 		
 		}
 		
 	}
@@ -170,11 +190,21 @@ public class UI_Missions : MonoBehaviour {
 		yield return new WaitForSeconds(secondsToWait);
 		
 		Vector3 newObjPos = oldObj.transform.position;
-		iTween.MoveTo(oldObj, new Vector3 (oldObj.transform.position.x - 40,oldObj.transform.position.y,oldObj.transform.position.z), 1.0f);
-		iTween.MoveTo(newObj, newObjPos, 0.75f);
-		
-		
+		iTween.MoveTo(oldObj, new Vector3 (oldObj.transform.position.x - 40,oldObj.transform.position.y,oldObj.transform.position.z), 0.5f);
+		iTween.MoveTo(newObj, iTween.Hash ("position", newObjPos, "time", 0.5f, "onComplete","TransitionFinish","onCompleteTarget",gameObject));
+
 	}
 	
+	private void TransitionFinish()
+	{
+		numTransitionsToWaitFor--;
+		
+		if (numTransitionsToWaitFor <= 0)
+		{
+			GameObject ok = transform.Find("btn_Okay").gameObject;
+			ok.active = true;
+			iTween.PunchScale(ok, new Vector3(.8f,.75f,.8f),.5f);
+		}
+	}
 	
 }

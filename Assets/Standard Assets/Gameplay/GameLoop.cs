@@ -10,28 +10,22 @@ public class GameLoop : MonoBehaviour {
 	public float BOOST_Y_FORCE = 14.0f;
 	
 	public Transform player;
-	
 	public Transform[] TERRAIN_PREFABS;
 	private ArrayList mPrefabArray; 
+
+	public AudioClip AUDIO_MENU;
+	public AudioClip AUDIO_GAMEPLAY;
+	private AudioSource mAudioSrc; 
 	
 	private ConstantForce mPlayerForce;
 	private int terrainCounter = 0; 
 	private int lastDestroyedTerrainIndex = 0; 
 	
 	private string mGameState = "MainMenu";
-	
 	private string mCurScreen = "Screen_MainMenu";
 	
 	// Use this for initialization
 	void Start () 
-	{
-		PopulateTerrain();
-		mPlayerForce = player.constantForce; 
-		
-		SwitchState(mGameState); 
-	}
-	
-	private void PopulateTerrain()
 	{
 		mPrefabArray = new ArrayList();
 		for (int i = 0; i < TERRAIN_PREFABS.Length; i++)
@@ -41,6 +35,15 @@ public class GameLoop : MonoBehaviour {
 		
 		TERRAIN_PREFABS = ShufflePrefabs(mPrefabArray);
 		
+		mPlayerForce = player.constantForce; 
+		mAudioSrc = gameObject.GetComponent<AudioSource>(); 
+		
+		SwitchState(mGameState); 
+	}
+	
+	private void PopulateTerrain()
+	{
+
 		// pull 3 of the prefabs out to make the first 3 segments. 
 		for (int i = 0; i < 3; i++)
 		{
@@ -214,7 +217,14 @@ public class GameLoop : MonoBehaviour {
 
 	public void SwitchState(string stateName)
 	{
-		// let the player know too
+		// if we were in gameplay, now we switch the audio to menu music
+		if (mGameState == "Gameplay" && stateName != mGameState)
+		{
+			mAudioSrc.clip = AUDIO_MENU;
+			mAudioSrc.Play(); 
+		}
+		
+		// to let the player know too
 		PlayerLoop pLoop = player.GetComponent<PlayerLoop>();
 
 		if (stateName == "MainMenu")
@@ -228,6 +238,23 @@ public class GameLoop : MonoBehaviour {
 		
 		if (stateName == "Gameplay")
 		{
+			for (int i=0; i < terrainCounter; i++)
+			{
+				GameObject ter = GameObject.Find("gen_terrain_" + i);
+				if (ter != null)
+				{
+					Destroy(ter); 
+				}
+			}
+			
+			terrainCounter = 0; 
+			PopulateTerrain(); 
+
+			
+			// Start gameplay music
+			mAudioSrc.clip = AUDIO_GAMEPLAY; 
+			mAudioSrc.Play(); 
+			
 			// Start screen Recording
 			if (Everyplay.SharedInstance.IsSupported())
 			{
@@ -258,6 +285,7 @@ public class GameLoop : MonoBehaviour {
 		
 		if (stateName == "PostGame")
 		{
+			
 			// End the screen Recording
 			if (Everyplay.SharedInstance.IsSupported() && Everyplay.SharedInstance.IsRecording())
 			{
