@@ -26,6 +26,9 @@ public class BoostLoop : MonoBehaviour {
 				GameObject go = transform.GetChild(i).gameObject;
 				go.renderer.material.color = Color.blue;
 			}
+			
+			UI_SFX.SharedInstance.Play(UI_SFX.SharedInstance.SFX_BOING);
+
 		}
 	}
 }

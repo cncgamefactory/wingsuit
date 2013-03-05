@@ -52,6 +52,7 @@ public class SaveLoad
 		empty.BestDistance = 0;
 		empty.BestHeight = 0;
 		empty.BestSpeed = 0; 
+		empty.DidTutorial = false; 
 		return empty; 
 	}
 	
@@ -72,6 +73,7 @@ public class SaveLoad
 		exUser.BestDistance = PlayerPrefs.GetFloat("bestdistance");
 		exUser.BestHeight = PlayerPrefs.GetFloat("bestheight");
 		exUser.BestSpeed = PlayerPrefs.GetFloat("bestspeed");
+		exUser.DidTutorial = PlayerPrefs.GetBool("didtutorial"); 
 		
 		return exUser;
 		
@@ -92,6 +94,7 @@ public class SaveLoad
 		PlayerPrefs.SetFloat("bestheight",uData.BestHeight);
 		PlayerPrefs.SetFloat("bestdistance",uData.BestDistance);
 		PlayerPrefs.SetFloat("bestspeed",uData.BestSpeed);
+		PlayerPrefs.SetBool("didtutorial", uData.DidTutorial); 
 		
 		PlayerPrefs.Flush();
 		

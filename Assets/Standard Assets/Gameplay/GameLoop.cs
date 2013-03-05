@@ -15,6 +15,7 @@ public class GameLoop : MonoBehaviour {
 
 	public AudioClip AUDIO_MENU;
 	public AudioClip AUDIO_GAMEPLAY;
+	public AudioSource WIND_SRC;
 	private AudioSource mAudioSrc; 
 	
 	private ConstantForce mPlayerForce;
@@ -24,9 +25,14 @@ public class GameLoop : MonoBehaviour {
 	private string mGameState = "MainMenu";
 	private string mCurScreen = "Screen_MainMenu";
 	
+	private float terrainGenTimer = 0; 
+	private Quaternion InitCameraRotation; 
+	
 	// Use this for initialization
 	void Start () 
 	{
+		InitCameraRotation = GameObject.Find("Main Camera").transform.rotation; 
+		
 		mPrefabArray = new ArrayList();
 		for (int i = 0; i < TERRAIN_PREFABS.Length; i++)
 		{
@@ -65,11 +71,14 @@ public class GameLoop : MonoBehaviour {
 	
 	private void CheckForTerrainGeneration()
 	{
+		terrainGenTimer -= Time.fixedDeltaTime;
+		
 		if ( player.transform.position.z > ((lastDestroyedTerrainIndex + 1) * 1000) && 
-			player.transform.position.z < ((lastDestroyedTerrainIndex + 1) * 1000 + 3) )
+			terrainGenTimer <= 0)
 		{
 			lastDestroyedTerrainIndex++;
 			GenerateTerrainPiece();
+			terrainGenTimer += 3;
 			Debug.Log("Crossed terrain marker");
 		}
 	}
@@ -119,6 +128,7 @@ public class GameLoop : MonoBehaviour {
 			GameObject booster = (GameObject)Instantiate(Resources.Load ("Booster"));
 			booster.transform.parent = myParent;
 			booster.transform.position = new Vector3(xPos, player.transform.position.y - 20, i); 
+			booster.GetComponent<RingRotate>().YROTAMT = 50;
 			i+= Random.Range(300,800);
 			numBoosters++;
 		}
@@ -153,20 +163,6 @@ public class GameLoop : MonoBehaviour {
 		if (mGameState == "Gameplay")
 		{
 			CheckForTerrainGeneration();
-			
-			// ROTATION OF GUY
-			if (Input.GetKeyDown(KeyCode.LeftArrow))
-			{
-				iTween.RotateTo(player.gameObject,new Vector3(30,270,60), 6.0f);
-			}
-			if (Input.GetKeyDown(KeyCode.RightArrow))
-			{
-				iTween.RotateTo(player.gameObject,new Vector3(-30,270,60), 6.0f);
-			}
-			if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow))
-			{
-				iTween.RotateTo(player.gameObject,new Vector3(0,270,60), 6.0f);
-			}
 			
 			// Hack crash
 			if (Input.GetKeyDown(KeyCode.A))
@@ -221,6 +217,7 @@ public class GameLoop : MonoBehaviour {
 		if (mGameState == "Gameplay" && stateName != mGameState)
 		{
 			mAudioSrc.clip = AUDIO_MENU;
+			WIND_SRC.Stop(); 
 			mAudioSrc.Play(); 
 		}
 		
@@ -234,6 +231,13 @@ public class GameLoop : MonoBehaviour {
 			player.rigidbody.drag = 1000.0f;
 //			player.transform.position = Vector3.zero;
 			
+		}
+		
+		if (stateName == "Tutorial")
+		{
+			LoadScreen("Screen_Tutorial", false); 
+			UI_SFX.SharedInstance.Play(UI_SFX.SharedInstance.SFX_WHOOSH); 
+				
 		}
 		
 		if (stateName == "Gameplay")
@@ -254,6 +258,9 @@ public class GameLoop : MonoBehaviour {
 			// Start gameplay music
 			mAudioSrc.clip = AUDIO_GAMEPLAY; 
 			mAudioSrc.Play(); 
+			WIND_SRC.Play(); 
+
+			UI_SFX.SharedInstance.Play(UI_SFX.SharedInstance.SFX_THUMP); 
 			
 			// Start screen Recording
 			if (Everyplay.SharedInstance.IsSupported())
@@ -269,6 +276,7 @@ public class GameLoop : MonoBehaviour {
 			player.rigidbody.drag = 1.0f;
 			player.transform.position = new Vector3(0,50,0);	
 			iTween.RotateTo(player.gameObject,new Vector3(0,270,60), 0.1f);
+			GameObject.Find("Main Camera").transform.rotation = InitCameraRotation; 
 			
 		}
 		
@@ -280,20 +288,25 @@ public class GameLoop : MonoBehaviour {
 			script.RefreshMissionData(); 
 			Hashtable myhash = iTween.Hash("time",.5f,"y",-10,"onComplete","OnScreenLoaded","onCompleteTarget",screenObj);
 			LoadScreen("Screen_Missions", myhash); 
+			UI_SFX.SharedInstance.Play(UI_SFX.SharedInstance.SFX_WHOOSH); 
 		}
 		
 		
 		if (stateName == "PostGame")
 		{
-			
 			// End the screen Recording
 			if (Everyplay.SharedInstance.IsSupported() && Everyplay.SharedInstance.IsRecording())
 			{
+				Everyplay.SharedInstance.SetMetadata("level_name","Great Wide Open");
+				Everyplay.SharedInstance.SetMetadata("score",player.transform.position.z);
+				Everyplay.SharedInstance.SetMetadata("name",PersistentData.mPersistentData.mUserData.Id);
 				Everyplay.SharedInstance.StopRecording();
+				
 				ShowThumbnailToTheUserInTheUI(); 
 			}
 
 			LoadScreen("Screen_PostGame", false);
+			UI_SFX.SharedInstance.Play(UI_SFX.SharedInstance.SFX_WHOOSH); 
 		}
 
 		
@@ -348,6 +361,7 @@ public class GameLoop : MonoBehaviour {
 		mCurScreen = name;
 		GameObject screen = GameObject.Find (name);
 		iTween.MoveTo(screen, new Vector3(0,-10,0), speed);
+		
 	}
 	
 	private void UnloadScreen(string name, bool immediate)
@@ -369,6 +383,7 @@ public class GameLoop : MonoBehaviour {
 		mCurScreen = name;
 		GameObject screen = GameObject.Find (name);
 		iTween.MoveTo(screen, hash);
+
 	}
 	
 	private void UnloadScreen(string name)

@@ -14,4 +14,5 @@ public class UserData
 	public float BestHeight 	{ get; set; }
 	public float BestSpeed 		{ get; set; }
 	public float BestDistance 	{ get; set; }
+	public bool DidTutorial		{ get; set; }
 }

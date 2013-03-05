@@ -22,11 +22,34 @@ public class PlayerLoop : MonoBehaviour {
 		loop = GameObject.Find("Logic").GetComponent<GameLoop>();
 	}
 	
+	void DoBestPlayerInput()
+	{
+		float xPush = Input.acceleration.y * loop.MAX_X_FORCE * .5f;
+		rigidbody.AddRelativeForce(0,0,xPush,ForceMode.VelocityChange);
+
+//		Debug.Log("Player Rotation: " + transform.rotation.x + "," + transform.rotation.y + "," + transform.rotation.z); 
+		
+//		transform.RotateAroundLocal(new Vector3(0,.5f,.5f),.2f);
+		
+//		float rotSpeed = 100.0f * Input.acceleration.y; 
+		
+//        transform.Rotate(Vector3.up * (Input.acceleration.y * Time.deltaTime), Space.World);
+//        transform.Rotate(new Vector3(0,.5f,.5f) * (rotSpeed * Time.deltaTime), Space.Self);
+		
+		float rotSpeed = .5f * Input.acceleration.y; 
+        transform.RotateAroundLocal(new Vector3(0,.5f,.5f), (rotSpeed * Time.deltaTime));
+
+		
+	}
+	
 	// Update is called once per frame
 	void Update () 
 	{
 		if (mGameState == "Gameplay")
 		{
+			
+			DoBestPlayerInput();
+			
 			// HEIGHT!
 			if (heightBoostTimer > 0)
 			{
@@ -81,9 +104,14 @@ public class PlayerLoop : MonoBehaviour {
 			}
 		}
 		
-		if (mGameState == "Limbo" && rigidbody.velocity.z < 5)
+		if (mGameState == "Limbo" && rigidbody.velocity.z < 5 )
 		{
 			CheckForHighScores();
+
+			// update the post-game results screen
+			GameObject pgscreen = GameObject.Find ("Screen_PostGame");
+			UI_PostGame script = pgscreen.GetComponent<UI_PostGame>();
+			script.RefreshScore(mMaxDistance, mMaxSpeed, mMaxHeight);
 			
 			if (DidPassAMission())
 			{

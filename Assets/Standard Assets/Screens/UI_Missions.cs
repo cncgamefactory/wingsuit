@@ -92,6 +92,8 @@ public class UI_Missions : MonoBehaviour {
 	
 	private void Bounce(GameObject go, string state)
 	{
+		UI_SFX.SharedInstance.Play(UI_SFX.SharedInstance.SFX_BOING); 
+
 		float bounceAmt = 0.5f;
 		iTween.PunchScale(go, iTween.Hash("x",bounceAmt,"y",bounceAmt,"z",bounceAmt,"onComplete","DelayedSwitch","onCompleteTarget",gameObject,"onCompleteParams",state,"time",0.5f));
 	}
@@ -110,12 +112,12 @@ public class UI_Missions : MonoBehaviour {
 		prev_m2 = (Mission)PersistentData.mPersistentData.mMissionData[PersistentData.mPersistentData.mUserData.PrevMission2Id];
 		prev_m3 = (Mission)PersistentData.mPersistentData.mMissionData[PersistentData.mPersistentData.mUserData.PrevMission3Id];
 
-		m1Btn.transform.Find("text").GetComponent<TextMesh>().text = m1.Name;
-		m2Btn.transform.Find("text").GetComponent<TextMesh>().text = m2.Name;
-		m3Btn.transform.Find("text").GetComponent<TextMesh>().text = m3.Name;
-		prevm1Btn.transform.Find("text").GetComponent<TextMesh>().text = prev_m1.Name;
-		prevm2Btn.transform.Find("text").GetComponent<TextMesh>().text = prev_m2.Name;
-		prevm3Btn.transform.Find("text").GetComponent<TextMesh>().text = prev_m3.Name;
+		m1Btn.transform.Find("text").GetComponent<SpriteText>().Text = m1.Name;
+		m2Btn.transform.Find("text").GetComponent<SpriteText>().Text = m2.Name;
+		m3Btn.transform.Find("text").GetComponent<SpriteText>().Text = m3.Name;
+		prevm1Btn.transform.Find("text").GetComponent<SpriteText>().Text = prev_m1.Name;
+		prevm2Btn.transform.Find("text").GetComponent<SpriteText>().Text = prev_m2.Name;
+		prevm3Btn.transform.Find("text").GetComponent<SpriteText>().Text = prev_m3.Name;
 		prevm1Btn.transform.Find("check").gameObject.active = false;
 		prevm2Btn.transform.Find("check").gameObject.active = false;
 		prevm3Btn.transform.Find("check").gameObject.active = false;
@@ -186,17 +188,21 @@ public class UI_Missions : MonoBehaviour {
 		GameObject check = oldObj.transform.Find("check").gameObject;
 		check.active = true; 
 		iTween.PunchScale(check, new Vector3(.75f,1,.75f),secondsToWait);
+		UI_SFX.SharedInstance.Play(UI_SFX.SharedInstance.SFX_CHECK); 
 
 		yield return new WaitForSeconds(secondsToWait);
 		
 		Vector3 newObjPos = oldObj.transform.position;
 		iTween.MoveTo(oldObj, new Vector3 (oldObj.transform.position.x - 40,oldObj.transform.position.y,oldObj.transform.position.z), 0.5f);
+		UI_SFX.SharedInstance.Play(UI_SFX.SharedInstance.SFX_WHISP); 
 		iTween.MoveTo(newObj, iTween.Hash ("position", newObjPos, "time", 0.5f, "onComplete","TransitionFinish","onCompleteTarget",gameObject));
 
 	}
 	
 	private void TransitionFinish()
 	{
+		UI_SFX.SharedInstance.Play(UI_SFX.SharedInstance.SFX_WHISP); 
+
 		numTransitionsToWaitFor--;
 		
 		if (numTransitionsToWaitFor <= 0)

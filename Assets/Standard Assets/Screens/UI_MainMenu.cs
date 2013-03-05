@@ -33,7 +33,15 @@ public class UI_MainMenu : MonoBehaviour {
 	{
 		if (clicked.name.Contains("mainmenu"))
 		{
-			DelayedSwitch("Gameplay");
+			if (PersistentData.mPersistentData.mUserData.DidTutorial)
+			{
+				DelayedSwitch("Gameplay");
+			}
+			else
+			{
+				DelayedSwitch("Tutorial"); 
+			}
+
 		}
 	}
 	

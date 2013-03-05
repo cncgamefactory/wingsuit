@@ -21,11 +21,10 @@ public class MarkerLoop : MonoBehaviour {
 			pLoop.AddHeightBoost(4.5f);
 //			Debug.Log("HEIGHT BOOST!");
 			
-			for(int i = 0; i < transform.GetChildCount(); i++)
-			{
-				GameObject go = transform.GetChild(i).gameObject;
-				go.renderer.material.color = Color.white;
-			}
+			ParticleSystem ps = transform.Find("Particles").GetComponent<ParticleSystem>(); 
+			ps.startColor = Color.green;
+			
+			UI_SFX.SharedInstance.Play(UI_SFX.SharedInstance.SFX_BOING);
 		}
 	}
 }
