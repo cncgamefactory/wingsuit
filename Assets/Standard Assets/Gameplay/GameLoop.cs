@@ -5,8 +5,8 @@ public class GameLoop : MonoBehaviour {
 	
 	public float MAX_X_FORCE = 3.0f;
 	public float DEFAULT_Y_FORCE = 7.0f;
-	public float DEFAULT_Z_FORCE = 100.0f;
-	public float BOOST_Z_FORCE = 150.0f;
+	public float DEFAULT_Z_FORCE = 10.0f;
+	public float BOOST_Z_FORCE = 15.0f;
 	public float BOOST_Y_FORCE = 14.0f;
 	
 	public Transform player;
@@ -27,6 +27,8 @@ public class GameLoop : MonoBehaviour {
 	
 	private float terrainGenTimer = 0; 
 	private Quaternion InitCameraRotation; 
+	
+	private float terrainScale = 100; 
 	
 	// Use this for initialization
 	void Start () 
@@ -51,11 +53,11 @@ public class GameLoop : MonoBehaviour {
 	{
 
 		// pull 3 of the prefabs out to make the first 3 segments. 
-		for (int i = 0; i < 3; i++)
+		for (int i = 0; i < 4; i++)
 		{
 			Vector3 position = Vector3.zero;
-			position.z = 1000 * i;
-			Transform newTerrain = Instantiate(TERRAIN_PREFABS[i], position, Quaternion.identity) as Transform;
+			position.z = terrainScale * i;
+			Transform newTerrain = Instantiate(TERRAIN_PREFABS[0], position, Quaternion.identity) as Transform;
 			newTerrain.name = "gen_terrain_" + terrainCounter;
 
 			terrainCounter++;
@@ -73,7 +75,7 @@ public class GameLoop : MonoBehaviour {
 	{
 		terrainGenTimer -= Time.fixedDeltaTime;
 		
-		if ( player.transform.position.z > ((lastDestroyedTerrainIndex + 1) * 1000) && 
+		if ( player.transform.position.z > ((lastDestroyedTerrainIndex + 1) * terrainScale) && 
 			terrainGenTimer <= 0)
 		{
 			lastDestroyedTerrainIndex++;
@@ -88,7 +90,7 @@ public class GameLoop : MonoBehaviour {
 	{
 		int i = Random.Range(0,mPrefabArray.Count);
 		Vector3 position = Vector3.zero;
-		position.z = 1000 * terrainCounter;
+		position.z = terrainScale * terrainCounter;
 		
 		Transform newTerrain = Instantiate(TERRAIN_PREFABS[i], position, Quaternion.identity) as Transform;
 		newTerrain.name = "gen_terrain_" + terrainCounter;
@@ -110,27 +112,27 @@ public class GameLoop : MonoBehaviour {
 		int numMarkers = 0;
 		int numBoosters = 0; 
 		
-		for (int j = startZ; j < (startZ + 1000); j++)
+		for (float j = startZ; j < (startZ + terrainScale); j++)
 		{
-			xPos = Random.Range(-120,120);
+			xPos = Random.Range(-30,30);
 			GameObject marker = (GameObject)Instantiate(Resources.Load ("Marker"));
 			marker.transform.parent = myParent;
 			marker.transform.position = new Vector3(xPos, 0, j); 
-			// thin out the height boosters the farther we go
-			int min = 50 + (terrainCounter * 10);
-			int max = 200 + (terrainCounter * 20);
-			j+= Random.Range(min, max);
+
+			float min = terrainScale *.3f;
+			float max = terrainScale *.7f;
+			j += Random.Range(min, max);
 			numMarkers++;
 		}
 		
-		for (int i = startZ; i < (startZ + 1000); i++)
+		for (float i = startZ; i < (startZ + terrainScale); i++)
 		{
-			xPos = Random.Range(-120,120);
+			xPos = Random.Range(-30,30);
 			GameObject booster = (GameObject)Instantiate(Resources.Load ("Booster"));
 			booster.transform.parent = myParent;
 			booster.transform.position = new Vector3(xPos, Random.Range(6,25), i); 
 			DoRandomRingRotation(booster); 
-			i+= Random.Range(300,800);
+			i+= Random.Range(terrainScale *.45f,terrainScale*.7f);
 			numBoosters++;
 		}
 		
@@ -303,17 +305,18 @@ public class GameLoop : MonoBehaviour {
 			Vector3 cForce = new Vector3(0,DEFAULT_Y_FORCE,DEFAULT_Z_FORCE);
 			player.constantForce.force = cForce;
 			player.rigidbody.drag = 1.0f;
-			player.transform.position = new Vector3(0,50,0);	
-			iTween.RotateTo(player.gameObject,new Vector3(0,270,60), 0.1f);
+			player.transform.position = new Vector3(0,10,0);	
+			iTween.RotateTo(player.gameObject,new Vector3(0,270,45), 0.1f);
 			GameObject.Find("Main Camera").transform.rotation = InitCameraRotation; 
-			player.Find("Tail").gameObject.active = false; 
 			if (PersistentData.mPersistentData.mUserData.PrestigeLevel == 1)
 			{
-				player.Find("Tail").gameObject.active = true; 
+//				player.Find("Tail").gameObject.active = true; 
 			}
 			
 			pLoop.ZeroOutSpeedBoost(); 
 			pLoop.ZeroOutHeightBoost(); 
+			
+			lastDestroyedTerrainIndex = 0; 
 			
 		}
 		
@@ -344,7 +347,7 @@ public class GameLoop : MonoBehaviour {
 			if (Everyplay.SharedInstance.IsSupported() && Everyplay.SharedInstance.IsRecording())
 			{
 				Everyplay.SharedInstance.SetMetadata("level_name","Great Wide Open");
-				Everyplay.SharedInstance.SetMetadata("score",player.transform.position.z);
+				Everyplay.SharedInstance.SetMetadata("score",player.transform.position.z * 10);
 				Everyplay.SharedInstance.SetMetadata("name",PersistentData.mPersistentData.mUserData.Id);
 				Everyplay.SharedInstance.StopRecording();
 				

@@ -140,6 +140,7 @@
      <Compile Include="Assets\Plugins\iTween\Sample\MoveSample.cs" />
      <Compile Include="Assets\Plugins\iTween\Sample\RotateSample.cs" />
      <Compile Include="Assets\Plugins\iTween\Sample\SampleInfo.cs" />
+     <Compile Include="Assets\Standard Assets\CameraFollow.cs" />
      <Compile Include="Assets\Standard Assets\CameraJitter.cs" />
      <Compile Include="Assets\Standard Assets\Gameplay\BoostLoop.cs" />
      <Compile Include="Assets\Standard Assets\Gameplay\GameLoop.cs" />
@@ -179,6 +180,7 @@
      <None Include="Assets\Plugins\AnBSoft Common\Standard Shaders\Sprite Vertex Colored.shader" />
      <None Include="Assets\Plugins\Framework\Shaders\GA_HeatMapSolid.shader" />
      <None Include="Assets\Plugins\Framework\Shaders\GA_HeatMapTransparent.shader" />
+     <None Include="Assets\TerrainToolkit\Read me.txt" />
  <Reference Include="Assets\Plugins\Framework\Using\LitJson">
  <HintPath>Assets\Plugins\Framework\Using\LitJson.dll</HintPath>
  </Reference>

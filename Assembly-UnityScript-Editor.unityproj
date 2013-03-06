@@ -63,6 +63,7 @@
      <None Include="Assets\Plugins\AnBSoft Common\Standard Shaders\Sprite Vertex Colored.shader" />
      <None Include="Assets\Plugins\Framework\Shaders\GA_HeatMapSolid.shader" />
      <None Include="Assets\Plugins\Framework\Shaders\GA_HeatMapTransparent.shader" />
+     <None Include="Assets\TerrainToolkit\Read me.txt" />
  <Reference Include="Assets\Plugins\Framework\Using\LitJson">
  <HintPath>Assets\Plugins\Framework\Using\LitJson.dll</HintPath>
  </Reference>
@@ -70,6 +71,10 @@
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
       <Project>{9895B6AD-0F0A-EA84-F19D-69C622F897C9}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
+    <ProjectReference Include="Assembly-CSharp.csproj">
+      <Project>{84318A29-BCBA-789D-0F81-2395E7E30193}</Project>      <Name>Assembly-CSharp</Name>    </ProjectReference>
+    <ProjectReference Include="Assembly-UnityScript.unityproj">
+      <Project>{EDFE3F95-8951-A837-E295-A78D518E1B80}</Project>      <Name>Assembly-UnityScript</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

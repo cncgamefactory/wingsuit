@@ -1,31 +1,33 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Standard Assets/Gameplay/PlayerLoop.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Standard Assets/SmoothFollow.cs">
     <Files>
       <File FileName="../../../../Dropbox/Private/Unity/Projects/30Seconds/Assets/Scripts/CameraFollow.cs" Line="35" Column="33" />
       <File FileName="Assets/Standard Assets/Screens/UI_PostGame.cs" Line="1" Column="1" />
-      <File FileName="Assets/Standard Assets/Gameplay/PlayerLoop.cs" Line="362" Column="14" />
-      <File FileName="Assets/Standard Assets/Screens/UI_Missions.cs" Line="162" Column="36" />
-      <File FileName="Assets/Standard Assets/Gameplay/GameLoop.cs" Line="299" Column="1" />
+      <File FileName="Assets/Standard Assets/Gameplay/PlayerLoop.cs" Line="106" Column="24" />
+      <File FileName="Assets/Standard Assets/Screens/UI_Missions.cs" Line="1" Column="1" />
+      <File FileName="Assets/Standard Assets/Gameplay/GameLoop.cs" Line="310" Column="1" />
       <File FileName="Assets/Standard Assets/Helpers/Fader.cs" Line="1" Column="1" />
-      <File FileName="Assets/Standard Assets/Screens/UI_Gameplay.cs" Line="1" Column="1" />
+      <File FileName="Assets/Standard Assets/Screens/UI_Gameplay.cs" Line="23" Column="61" />
       <File FileName="Assets/Standard Assets/Screens/UI_MainMenu.cs" Line="1" Column="1" />
       <File FileName="Assets/Plugins/Sprite Scripts/SpriteText.cs" Line="1" Column="1" />
       <File FileName="Assets/Plugins/Everyplay/Scripts/EveryplayTest.cs" Line="1" Column="1" />
       <File FileName="Assets/Standard Assets/Helpers/UI_SFX.cs" Line="1" Column="1" />
       <File FileName="Assets/Standard Assets/Helpers/PersistentData.cs" Line="1" Column="1" />
       <File FileName="Assets/Standard Assets/CameraJitter.cs" Line="1" Column="1" />
-      <File FileName="Assets/Standard Assets/Gameplay/MarkerLoop.cs" Line="27" Column="1" />
-      <File FileName="Assets/Standard Assets/Gameplay/BoostLoop.cs" Line="35" Column="1" />
+      <File FileName="Assets/Standard Assets/Gameplay/MarkerLoop.cs" Line="1" Column="1" />
+      <File FileName="Assets/Standard Assets/Gameplay/BoostLoop.cs" Line="1" Column="1" />
       <File FileName="Assets/Standard Assets/Screens/UI_Tutorial.cs" Line="1" Column="1" />
       <File FileName="Assets/Standard Assets/Helpers/UserData.cs" Line="1" Column="1" />
       <File FileName="Assets/Standard Assets/Helpers/SaveLoad.cs" Line="1" Column="1" />
       <File FileName="Assets/Resources/missions.txt" Line="1" Column="1" />
-      <File FileName="Assets/Standard Assets/Screens/UI_Settings.cs" Line="50" Column="1" />
+      <File FileName="Assets/Standard Assets/Screens/UI_Settings.cs" Line="1" Column="1" />
       <File FileName="Assets/Plugins/iTween/Plugins/iTween.cs" Line="1" Column="1" />
       <File FileName="Assets/Standard Assets/SmoothFollow.cs" Line="1" Column="1" />
-      <File FileName="Assets/Plugins/Framework/Scripts/GA_Design.cs" Line="23" Column="14" />
-      <File FileName="Assets/Plugins/Framework/Scripts/GA.cs" Line="167" Column="1" />
+      <File FileName="Assets/Plugins/Framework/Scripts/GA_Design.cs" Line="1" Column="1" />
+      <File FileName="Assets/Plugins/Framework/Scripts/GA.cs" Line="1" Column="1" />
+      <File FileName="Assets/Standard Assets/Helpers/StickToGround.cs" Line="1" Column="1" />
+      <File FileName="Assets/Standard Assets/Helpers/Mission.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -46,11 +48,10 @@
               </Node>
               <Node name="Resources" expanded="True" />
               <Node name="Standard Assets" expanded="True">
-                <Node name="Gameplay" expanded="True">
-                  <Node name="PlayerLoop.cs" selected="True" />
-                </Node>
+                <Node name="Gameplay" expanded="True" />
                 <Node name="Helpers" expanded="True" />
                 <Node name="Screens" expanded="True" />
+                <Node name="SmoothFollow.cs" selected="True" />
               </Node>
             </Node>
           </Node>

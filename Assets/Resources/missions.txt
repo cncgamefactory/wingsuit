@@ -1,31 +1,32 @@
 0|Fly more than 2000 meters|distance|>|2000||||||1
-1|2500 meters - can you do it?|distance|>|2500||||||2
+1|2 Height Boosts and 2500 meters|distance|>|2500|heightboosts|>=|2|||2
 2|Fly more than 3000 meters|distance|>|3000||||||3
 3|Fly over 3 miles (4,828 meters)|distance|>|4828||||||4
 4|Flying Mt. Everest (8,848m)|distance|>|8848||||||5
-5|Time for a 10k|distance|>|10000||||||6
+5|10k plus 4 Speed Boosts|distance|>|10000|speedboosts|>=|4|||6
 6|Earn a 13.1 Sticker (20,921m)|distance|>|20921||||||7
 7|World Record Flight (26,257m)|distance|>|26257||||||8
 8|Up for a marathon? (41,843m)|distance|>|41843||||||9997
 1000|Soar higher than 50 meters|height|>|50||||||1001
 1001|Go higher than 65 meters|height|>|65||||||1002
-1002|Up and away! 75 meters|height|>|75||||||1003
+1002|75 meters high plus 1 speed boost|height|>|75||||||1003
 1003|100 Meter Dash|height|>|100||||||1004
-1004|Go higher than 120m|height|>|120||||||1005
+1004|120m Altitude + 3 speed boosts|height|>|120|speedboosts|>=|3|||1005
 1005|Reach a height of 140m|height|>|140||||||1006
 1006|150 meters or higher!|height|>|150||||||1007
-1007|Get super high! (175m)|height|>|175||||||1008
-1008|Get mega high! (200m)|height|>|200||||||1009
-1009|Get insane high! (225m)|height|>|225||||||1010
-1010|Get Rick James high! (300m)|height|>|300||||||9998
+1007|Hit 20 Height Boosts|heightboosts|>=|20||||||1008
+1008|Get super high! (175m)|height|>|175||||||1009
+1009|200m Altitude + 5 speed boosts|height|>|200|speedboosts|>=|5|||1010
+1010|Get insane high! (210m)|height|>|210||||||1011
+1011|Get Rick James high! (250m)|height|>|250||||||9998
 2000|World Record Speed! (226 mph)|speed|>|226||||||2001
 2001|Reach a speed of 250 mph|speed|>|250||||||2002
-2002|Enter the 300mph club|speed|>|300||||||2003
+2002|300 mph + 6 Height Boosts|speed|>|300|heightboosts|>=|6|||2003
 2003|Break speed of sound!|speed|>|340.3||||||2004
-2004|350 mph sounds great|speed|>|350||||||2005
+2004|350 mph + 8 Height Boosts|speed|>|350|heightboosts|>=|8|||2005
 2005|Can you go faster? 375mph?|speed|>|375||||||2006
 2006|Why not faster - 400mph!|speed|>|400||||||2007
-2007|This might not be possible - 500mph|speed|>|500||||||9999
+2007|Probably not possible: 500 mph|speed|>|500||||||9999
 9997|Distance Missions Complete!|distance|<|-100000||||||9997
 9998|Altitude Missions Complete!|height|>|1000000||||||9998
 9999|Speed Missions Complete!|speed|<|-1000000||||||9999

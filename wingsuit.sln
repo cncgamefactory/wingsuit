@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 
 Project("{14183DA9-E599-E00A-BAFE-DE4EEC8F9AE1}") = "wingsuit", "Assembly-CSharp-firstpass.csproj", "{9895B6AD-0F0A-EA84-F19D-69C622F897C9}"
 EndProject
+Project("{14183DA9-E599-E00A-BAFE-DE4EEC8F9AE1}") = "wingsuit", "Assembly-CSharp.csproj", "{84318A29-BCBA-789D-0F81-2395E7E30193}"
+EndProject
 Project("{14183DA9-E599-E00A-BAFE-DE4EEC8F9AE1}") = "wingsuit", "Assembly-CSharp-Editor.csproj", "{A197E3F4-275E-1B20-9FD6-4EC3C16705A8}"
+EndProject
+Project("{14183DA9-E599-E00A-BAFE-DE4EEC8F9AE1}") = "wingsuit", "Assembly-UnityScript.unityproj", "{EDFE3F95-8951-A837-E295-A78D518E1B80}"
 EndProject
 Project("{14183DA9-E599-E00A-BAFE-DE4EEC8F9AE1}") = "wingsuit", "Assembly-UnityScript-Editor.unityproj", "{DABC3605-5EA3-8AE9-C7F7-349C2C4768BB}"
 EndProject
@@ -17,10 +21,18 @@ Global
 		{9895B6AD-0F0A-EA84-F19D-69C622F897C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9895B6AD-0F0A-EA84-F19D-69C622F897C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9895B6AD-0F0A-EA84-F19D-69C622F897C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84318A29-BCBA-789D-0F81-2395E7E30193}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84318A29-BCBA-789D-0F81-2395E7E30193}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84318A29-BCBA-789D-0F81-2395E7E30193}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84318A29-BCBA-789D-0F81-2395E7E30193}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A197E3F4-275E-1B20-9FD6-4EC3C16705A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A197E3F4-275E-1B20-9FD6-4EC3C16705A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A197E3F4-275E-1B20-9FD6-4EC3C16705A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A197E3F4-275E-1B20-9FD6-4EC3C16705A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EDFE3F95-8951-A837-E295-A78D518E1B80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDFE3F95-8951-A837-E295-A78D518E1B80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDFE3F95-8951-A837-E295-A78D518E1B80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDFE3F95-8951-A837-E295-A78D518E1B80}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DABC3605-5EA3-8AE9-C7F7-349C2C4768BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DABC3605-5EA3-8AE9-C7F7-349C2C4768BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DABC3605-5EA3-8AE9-C7F7-349C2C4768BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -29,7 +41,7 @@ Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-																																																												GlobalSection(MonoDevelopProperties) = preSolution
+																																																																GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Assembly-CSharp.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1

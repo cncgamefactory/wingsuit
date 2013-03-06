@@ -18,7 +18,7 @@ public class MarkerLoop : MonoBehaviour {
 		if (col.name == "Player")
 		{
 			PlayerLoop pLoop = col.GetComponent<PlayerLoop>();
-			pLoop.AddHeightBoost(4.5f);
+			pLoop.AddHeightBoost(1.5f);
 //			Debug.Log("HEIGHT BOOST!");
 			
 			pLoop.numHeightBoostersHit++; 

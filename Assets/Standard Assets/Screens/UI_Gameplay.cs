@@ -20,10 +20,11 @@ public class UI_Gameplay : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		float s = player.rigidbody.velocity.magnitude * 2.237f; // mph
+		float s = player.rigidbody.velocity.magnitude * 2.237f * 7; // mph
 		float h = player.position.y; // height
-		
-		distance.Text = player.position.z.ToString("N0");
+		float d = player.position.z * 10;
+
+		distance.Text = d.ToString("N0");
 		mph.Text = s.ToString("N2");
 		height.Text = h.ToString("N2");
 	}

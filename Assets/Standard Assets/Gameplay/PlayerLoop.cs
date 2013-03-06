@@ -101,9 +101,9 @@ public class PlayerLoop : MonoBehaviour {
 
 			}			
 			
-			mph = rigidbody.velocity.magnitude * 2.237f;
+			mph = rigidbody.velocity.magnitude * 2.237f * 7;
 			height = transform.position.y;
-			distance = transform.position.z;
+			distance = transform.position.z * 10;
 		
 			if (mph > mMaxSpeed)
 			{
@@ -196,6 +196,29 @@ public class PlayerLoop : MonoBehaviour {
 		}
 	}
 	
+	private bool passedMission(Mission missionToCheck)
+	{
+		if ( 
+			(
+			CheckOperator(GetValToCheck(missionToCheck.Condition1),missionToCheck.Operator1,missionToCheck.Value1) &&
+			missionToCheck.Condition2 == ""
+			)
+			|| 
+			(
+			CheckOperator(GetValToCheck(missionToCheck.Condition1),missionToCheck.Operator1,missionToCheck.Value1) &&
+			CheckOperator(GetValToCheck(missionToCheck.Condition2),missionToCheck.Operator2,missionToCheck.Value2)
+			)
+		)
+		{
+			return true; 
+		}
+		else
+		{
+			return false; 
+		}
+	
+	}
+	
 	private	bool DidPassAMission()
 	{
 		bool didPass = false; 
@@ -203,7 +226,7 @@ public class PlayerLoop : MonoBehaviour {
 		Mission missionToCheck = PersistentData.mPersistentData.mMissionData[PersistentData.mPersistentData.mUserData.Mission1Id] as Mission;
 		if (missionToCheck != null)
 		{
-			if (CheckOperator(GetValToCheck(missionToCheck.Condition1),missionToCheck.Operator1,missionToCheck.Value1) || CheckOperator(GetValToCheck(missionToCheck.Condition2),missionToCheck.Operator2,missionToCheck.Value2))
+			if (passedMission(missionToCheck))
 			{
 				Debug.Log ("Passed mission " + missionToCheck.Id + "! Unlocking mission " + missionToCheck.UnlockId);
 				PersistentData.mPersistentData.mUserData.PrevMission1Id = PersistentData.mPersistentData.mUserData.Mission1Id;
@@ -215,7 +238,7 @@ public class PlayerLoop : MonoBehaviour {
 		missionToCheck = PersistentData.mPersistentData.mMissionData[PersistentData.mPersistentData.mUserData.Mission2Id] as Mission;
 		if (missionToCheck != null)
 		{
-			if (CheckOperator(GetValToCheck(missionToCheck.Condition1),missionToCheck.Operator1,missionToCheck.Value1) || CheckOperator(GetValToCheck(missionToCheck.Condition2),missionToCheck.Operator2,missionToCheck.Value2))
+			if (passedMission(missionToCheck))
 			{
 				Debug.Log ("Passed mission " + missionToCheck.Id + "! Unlocking mission " + missionToCheck.UnlockId);
 				PersistentData.mPersistentData.mUserData.PrevMission2Id = PersistentData.mPersistentData.mUserData.Mission2Id;
@@ -227,7 +250,7 @@ public class PlayerLoop : MonoBehaviour {
 		missionToCheck = PersistentData.mPersistentData.mMissionData[PersistentData.mPersistentData.mUserData.Mission3Id] as Mission;
 		if (missionToCheck != null)
 		{
-			if (CheckOperator(GetValToCheck(missionToCheck.Condition1),missionToCheck.Operator1,missionToCheck.Value1) || CheckOperator(GetValToCheck(missionToCheck.Condition2),missionToCheck.Operator2,missionToCheck.Value2))
+			if (passedMission(missionToCheck))
 			{
 				Debug.Log ("Passed mission " + missionToCheck.Id + "! Unlocking mission " + missionToCheck.UnlockId);
 				PersistentData.mPersistentData.mUserData.PrevMission3Id = PersistentData.mPersistentData.mUserData.Mission3Id;
@@ -377,15 +400,15 @@ public class PlayerLoop : MonoBehaviour {
 
 		if (enabled)
 		{
-			ArmTrails[0].GetComponent<TrailRenderer>().time = .1f;
-			ArmTrails[1].GetComponent<TrailRenderer>().time = .1f;
+			ArmTrails[0].GetComponent<TrailRenderer>().time = .3f;
+			ArmTrails[1].GetComponent<TrailRenderer>().time = .3f;
 			Bounce (spdBoost);
 			CameraJitter.sharedInstance.ShakeIntensity = .02f;
 		}
 		else
 		{
-			ArmTrails[0].GetComponent<TrailRenderer>().time = .05f;
-			ArmTrails[1].GetComponent<TrailRenderer>().time = .05f;
+			ArmTrails[0].GetComponent<TrailRenderer>().time = .15f;
+			ArmTrails[1].GetComponent<TrailRenderer>().time = .15f;
 			CameraJitter.sharedInstance.ShakeIntensity = .004f;
 		}
 		

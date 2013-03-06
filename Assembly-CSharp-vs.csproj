@@ -44,7 +44,7 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\StickToGround.cs" />
+     <Compile Include="Assets\TerrainToolkit\TerrainToolkit.cs" />
      <None Include="Assets\Plugins\Webplayer\Readme_WebPlayer.txt" />
      <None Include="Assets\Plugins\Webplayer\crossdomain.xml" />
      <None Include="Assets\Plugins\AnBSoft Common\Standard Font\Arial, Fancy.txt" />
@@ -63,6 +63,7 @@
      <None Include="Assets\Plugins\AnBSoft Common\Standard Shaders\Sprite Vertex Colored.shader" />
      <None Include="Assets\Plugins\Framework\Shaders\GA_HeatMapSolid.shader" />
      <None Include="Assets\Plugins\Framework\Shaders\GA_HeatMapTransparent.shader" />
+     <None Include="Assets\TerrainToolkit\Read me.txt" />
  <Reference Include="Assets\Plugins\Framework\Using\LitJson">
  <HintPath>Assets\Plugins\Framework\Using\LitJson.dll</HintPath>
  </Reference>
