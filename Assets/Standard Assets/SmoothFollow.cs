@@ -6,8 +6,8 @@ public class SmoothFollow : MonoBehaviour {
 	public Transform target;
 
 	public float X_OFFSET = 0.0f;
-	public float Y_OFFSET = 2.0f;
-	public float Z_OFFSET = -10.0f;
+	public float Y_OFFSET = 3.3f;
+	public float Z_OFFSET = -5.0f;
 	
 	// Use this for initialization
 	void Start () {
@@ -30,6 +30,9 @@ public class SmoothFollow : MonoBehaviour {
 		playerMarker.x += X_OFFSET;
 		playerMarker.y += Y_OFFSET;
 		playerMarker.z += Z_OFFSET;
+		
+		if(playerMarker.y < 0)
+			playerMarker.y = 0; 
 		
 		transform.position = Vector3.Lerp(transform.position, playerMarker, Time.deltaTime * 10);
 //    	transform.rotation = Quaternion.Lerp(transform.rotation, playerMarker.rotation, Time.deltaTime * 100);

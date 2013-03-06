@@ -122,6 +122,7 @@
      <Compile Include="Assets\Standard Assets\Screens\UI_MainMenu.cs" />
      <Compile Include="Assets\Standard Assets\Screens\UI_Missions.cs" />
      <Compile Include="Assets\Standard Assets\Screens\UI_PostGame.cs" />
+     <Compile Include="Assets\Standard Assets\Screens\UI_Settings.cs" />
      <Compile Include="Assets\Standard Assets\Screens\UI_Tutorial.cs" />
      <Compile Include="Assets\Standard Assets\SmoothFollow.cs" />
      <None Include="Assets\Plugins\AnBSoft Common\Standard Font\Arial, Fancy.txt" />

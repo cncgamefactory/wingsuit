@@ -83,6 +83,7 @@ public class GameLoop : MonoBehaviour {
 		}
 	}
 
+	
 	private void GenerateTerrainPiece()
 	{
 		int i = Random.Range(0,mPrefabArray.Count);
@@ -127,13 +128,39 @@ public class GameLoop : MonoBehaviour {
 			xPos = Random.Range(-120,120);
 			GameObject booster = (GameObject)Instantiate(Resources.Load ("Booster"));
 			booster.transform.parent = myParent;
-			booster.transform.position = new Vector3(xPos, player.transform.position.y - 20, i); 
-			booster.GetComponent<RingRotate>().YROTAMT = 50;
+			booster.transform.position = new Vector3(xPos, Random.Range(4,25), i); 
+			DoRandomRingRotation(booster); 
 			i+= Random.Range(300,800);
 			numBoosters++;
 		}
 		
 		Debug.Log("Generated " + numMarkers + " markers and " + numBoosters + " boosters for " + myParent.name);
+	}
+	
+	private void DoRandomRingRotation(GameObject booster)
+	{
+		int rand = Random.Range (0,100); 
+		
+		if (rand > 66)
+		{
+			booster.GetComponent<RingRotate>().XROTAMT = 20 + (terrainCounter * 8);
+		}
+		else if (rand > 33)
+		{
+			booster.GetComponent<RingRotate>().YROTAMT = 20 + (terrainCounter * 8);
+		}
+		else if (rand > 10)
+		{
+			booster.GetComponent<RingRotate>().ZROTAMT = 20 + (terrainCounter * 8);
+		}
+		else 
+		{
+			booster.GetComponent<RingRotate>().XROTAMT = 50 + (terrainCounter * 2);
+			booster.GetComponent<RingRotate>().YROTAMT = 50 + (terrainCounter * 2);
+			booster.GetComponent<RingRotate>().ZROTAMT = 50 + (terrainCounter * 2);
+			
+		}
+		
 	}
 	
 	private Transform[] ShufflePrefabs(ArrayList source)
@@ -277,6 +304,12 @@ public class GameLoop : MonoBehaviour {
 			player.transform.position = new Vector3(0,50,0);	
 			iTween.RotateTo(player.gameObject,new Vector3(0,270,60), 0.1f);
 			GameObject.Find("Main Camera").transform.rotation = InitCameraRotation; 
+			player.Find("Tail").gameObject.active = false; 
+			if (PersistentData.mPersistentData.mUserData.PrestigeLevel == 1)
+			{
+				player.Find("Tail").gameObject.active = true; 
+			}
+			
 			
 		}
 		
@@ -291,6 +324,15 @@ public class GameLoop : MonoBehaviour {
 			UI_SFX.SharedInstance.Play(UI_SFX.SharedInstance.SFX_WHOOSH); 
 		}
 		
+		if (stateName == "Settings")
+		{
+			// with the mission data, since it has special shit, we have to call and refresh it. 
+			GameObject screenObj = GameObject.Find ("Screen_Settings");
+			UI_Settings script = screenObj.GetComponent<UI_Settings>();
+			Hashtable myhash = iTween.Hash("time",.5f,"y",-10,"onComplete","OnScreenLoaded","onCompleteTarget",screenObj);
+			LoadScreen("Screen_Settings", myhash); 
+			UI_SFX.SharedInstance.Play(UI_SFX.SharedInstance.SFX_WHOOSH); 
+		}
 		
 		if (stateName == "PostGame")
 		{
@@ -305,7 +347,9 @@ public class GameLoop : MonoBehaviour {
 				ShowThumbnailToTheUserInTheUI(); 
 			}
 
-			LoadScreen("Screen_PostGame", false);
+			GameObject screenObj = GameObject.Find ("Screen_PostGame");
+			Hashtable myhash = iTween.Hash("time",.5f,"y",-10,"onComplete","OnScreenLoaded","onCompleteTarget",screenObj);
+			LoadScreen("Screen_PostGame", myhash); 
 			UI_SFX.SharedInstance.Play(UI_SFX.SharedInstance.SFX_WHOOSH); 
 		}
 

@@ -132,10 +132,18 @@ public class UI_Missions : MonoBehaviour {
 		secondsToWait = .5f;
 
 		transform.Find("btn_Okay").gameObject.active = false; 		
-
-		
+	
+		PrestigeUpdate(); 
 	}
 	
+	public void PrestigeUpdate()
+	{
+		if (PersistentData.mPersistentData.mUserData.PrestigeLevel == 1)
+		{
+			SpriteText sub = transform.Find("SUBTITLE").GetComponent<SpriteText>(); 
+			sub.Text = "PRESTIGE MODE UNLOCKED!";
+		}
+	}
 	
 	public void OnScreenLoaded()
 	{
@@ -178,6 +186,7 @@ public class UI_Missions : MonoBehaviour {
 		if(numTransitionsToWaitFor == 0)
 		{
 			transform.Find("btn_Okay").gameObject.active = true; 		
+			CheckForPrestigeMode(); 
 		}
 		
 	}
@@ -210,7 +219,31 @@ public class UI_Missions : MonoBehaviour {
 			GameObject ok = transform.Find("btn_Okay").gameObject;
 			ok.active = true;
 			iTween.PunchScale(ok, new Vector3(.8f,.75f,.8f),.5f);
+
+			CheckForPrestigeMode(); 
 		}
 	}
+	
+	private void CheckForPrestigeMode()
+	{
+		// If these are their active missions, they are in prestige mode!
+		bool debugswitch = false; 
+		if (debugswitch || 
+				(
+					(PersistentData.mPersistentData.mUserData.Mission1Id == "9997") &&
+					(PersistentData.mPersistentData.mUserData.Mission2Id == "9998") &&
+					(PersistentData.mPersistentData.mUserData.Mission3Id == "9999")
+				) 
+			)
+		{
+			PersistentData.mPersistentData.mUserData.PrestigeLevel = 1;
+			PersistentData.mPersistentData.mUserData.Mission1Id = "0"; 
+			PersistentData.mPersistentData.mUserData.Mission2Id = "1000"; 
+			PersistentData.mPersistentData.mUserData.Mission3Id = "2000"; 
+			
+			PrestigeUpdate(); 
+		}
+	}
+	
 	
 }

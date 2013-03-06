@@ -15,4 +15,5 @@ public class UserData
 	public float BestSpeed 		{ get; set; }
 	public float BestDistance 	{ get; set; }
 	public bool DidTutorial		{ get; set; }
+	public int PrestigeLevel	{ get; set; }
 }

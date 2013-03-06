@@ -21,7 +21,7 @@ public class UI_Gameplay : MonoBehaviour {
 	void Update () 
 	{
 		float s = player.rigidbody.velocity.magnitude * 2.237f; // mph
-		float h = player.position.y * 3.28084f - 14.5f; // height in feet
+		float h = player.position.y; // height
 		
 		distance.Text = player.position.z.ToString("N0");
 		mph.Text = s.ToString("N2");

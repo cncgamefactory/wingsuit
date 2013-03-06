@@ -87,7 +87,7 @@ public class PlayerLoop : MonoBehaviour {
 			}			
 			
 			mph = rigidbody.velocity.magnitude * 2.237f;
-			height = transform.position.y * 3.28084f - 14.5f;
+			height = transform.position.y;
 			distance = transform.position.z;
 		
 			if (mph > mMaxSpeed)
@@ -106,13 +106,15 @@ public class PlayerLoop : MonoBehaviour {
 		
 		if (mGameState == "Limbo" && rigidbody.velocity.z < 5 )
 		{
-			CheckForHighScores();
-
 			// update the post-game results screen
 			GameObject pgscreen = GameObject.Find ("Screen_PostGame");
 			UI_PostGame script = pgscreen.GetComponent<UI_PostGame>();
 			script.RefreshScore(mMaxDistance, mMaxSpeed, mMaxHeight);
-			
+	
+			// we've displayed the stats to the user now, so we can save them now
+			CheckForHighScores();
+	
+			// for missions that pass we need to update the UI
 			if (DidPassAMission())
 			{
 				loop.SwitchState("Missions");
@@ -122,6 +124,13 @@ public class PlayerLoop : MonoBehaviour {
 				loop.SwitchState("PostGame");
 			}
 		
+		}
+		
+		if (mGameState == "PostGame")
+		{
+			mMaxDistance = 0; 
+			mMaxHeight = 0; 
+			mMaxSpeed = 0; 
 		}
 	}
 	
@@ -208,7 +217,7 @@ public class PlayerLoop : MonoBehaviour {
 		return didPass;
 	
 	}
-	
+
 	float GetValToCheck(string lhs)
 	{
 		float valToCheck = -1.0f;

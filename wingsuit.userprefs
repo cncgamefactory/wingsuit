@@ -1,22 +1,29 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Standard Assets/Gameplay/MarkerLoop.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Standard Assets/SmoothFollow.cs">
     <Files>
       <File FileName="../../../../Dropbox/Private/Unity/Projects/30Seconds/Assets/Scripts/CameraFollow.cs" Line="40" Column="9" />
-      <File FileName="Assets/Standard Assets/Screens/UI_PostGame.cs" Line="1" Column="1" />
-      <File FileName="Assets/Standard Assets/Screens/UI_Missions.cs" Line="1" Column="1" />
-      <File FileName="Assets/Standard Assets/Gameplay/GameLoop.cs" Line="128" Column="1" />
-      <File FileName="Assets/Standard Assets/Gameplay/PlayerLoop.cs" Line="1" Column="1" />
+      <File FileName="Assets/Standard Assets/Screens/UI_PostGame.cs" Line="88" Column="34" />
+      <File FileName="Assets/Standard Assets/Gameplay/PlayerLoop.cs" Line="126" Column="1" />
+      <File FileName="Assets/Standard Assets/Screens/UI_Missions.cs" Line="230" Column="1" />
+      <File FileName="Assets/Standard Assets/Gameplay/GameLoop.cs" Line="309" Column="1" />
       <File FileName="Assets/Standard Assets/Helpers/Fader.cs" Line="1" Column="1" />
       <File FileName="Assets/Standard Assets/Screens/UI_Gameplay.cs" Line="1" Column="1" />
-      <File FileName="Assets/Standard Assets/Screens/UI_MainMenu.cs" Line="1" Column="1" />
-      <File FileName="Assets/Plugins/Sprite Scripts/SpriteText.cs" Line="419" Column="1" />
+      <File FileName="Assets/Standard Assets/Screens/UI_MainMenu.cs" Line="36" Column="1" />
+      <File FileName="Assets/Plugins/Sprite Scripts/SpriteText.cs" Line="1" Column="1" />
       <File FileName="Assets/Plugins/Everyplay/Scripts/EveryplayTest.cs" Line="1" Column="1" />
-      <File FileName="Assets/Standard Assets/Helpers/UI_SFX.cs" Line="12" Column="30" />
+      <File FileName="Assets/Standard Assets/Helpers/UI_SFX.cs" Line="1" Column="1" />
       <File FileName="Assets/Standard Assets/Helpers/PersistentData.cs" Line="1" Column="1" />
-      <File FileName="Assets/Standard Assets/CameraJitter.cs" Line="9" Column="1" />
-      <File FileName="Assets/Standard Assets/Gameplay/MarkerLoop.cs" Line="25" Column="32" />
-      <File FileName="Assets/Standard Assets/Gameplay/BoostLoop.cs" Line="30" Column="1" />
+      <File FileName="Assets/Standard Assets/CameraJitter.cs" Line="1" Column="1" />
+      <File FileName="Assets/Standard Assets/Gameplay/MarkerLoop.cs" Line="1" Column="1" />
+      <File FileName="Assets/Standard Assets/Gameplay/BoostLoop.cs" Line="1" Column="1" />
+      <File FileName="Assets/Standard Assets/Screens/UI_Tutorial.cs" Line="34" Column="34" />
+      <File FileName="Assets/Standard Assets/Helpers/UserData.cs" Line="5" Column="2" />
+      <File FileName="Assets/Standard Assets/Helpers/SaveLoad.cs" Line="56" Column="28" />
+      <File FileName="Assets/Resources/missions.txt" Line="31" Column="57" />
+      <File FileName="Assets/Standard Assets/Screens/UI_Settings.cs" Line="26" Column="1" />
+      <File FileName="Assets/Plugins/iTween/Plugins/iTween.cs" Line="7051" Column="1" />
+      <File FileName="Assets/Standard Assets/SmoothFollow.cs" Line="9" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -32,16 +39,19 @@
                 </Node>
                 <Node name="Sprite Scripts" expanded="True" />
               </Node>
+              <Node name="Resources" expanded="True" />
               <Node name="Standard Assets" expanded="True">
-                <Node name="Gameplay" expanded="True">
-                  <Node name="MarkerLoop.cs" selected="True" />
-                </Node>
+                <Node name="Gameplay" expanded="True" />
                 <Node name="Helpers" expanded="True" />
                 <Node name="Screens" expanded="True" />
+                <Node name="SmoothFollow.cs" selected="True" />
               </Node>
             </Node>
           </Node>
         </State>
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
