@@ -118,7 +118,7 @@ public class GameLoop : MonoBehaviour {
 			marker.transform.position = new Vector3(xPos, 0, j); 
 			// thin out the height boosters the farther we go
 			int min = 50 + (terrainCounter * 10);
-			int max = 200 + (terrainCounter * 10);
+			int max = 200 + (terrainCounter * 20);
 			j+= Random.Range(min, max);
 			numMarkers++;
 		}
@@ -128,7 +128,7 @@ public class GameLoop : MonoBehaviour {
 			xPos = Random.Range(-120,120);
 			GameObject booster = (GameObject)Instantiate(Resources.Load ("Booster"));
 			booster.transform.parent = myParent;
-			booster.transform.position = new Vector3(xPos, Random.Range(4,25), i); 
+			booster.transform.position = new Vector3(xPos, Random.Range(6,25), i); 
 			DoRandomRingRotation(booster); 
 			i+= Random.Range(300,800);
 			numBoosters++;
@@ -240,6 +240,8 @@ public class GameLoop : MonoBehaviour {
 
 	public void SwitchState(string stateName)
 	{
+		GA.API.Design.NewEvent("GameState:" + stateName); 
+
 		// if we were in gameplay, now we switch the audio to menu music
 		if (mGameState == "Gameplay" && stateName != mGameState)
 		{
@@ -310,6 +312,8 @@ public class GameLoop : MonoBehaviour {
 				player.Find("Tail").gameObject.active = true; 
 			}
 			
+			pLoop.ZeroOutSpeedBoost(); 
+			pLoop.ZeroOutHeightBoost(); 
 			
 		}
 		

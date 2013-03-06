@@ -38,11 +38,13 @@ public class UI_Settings : MonoBehaviour {
 		if (clicked.name == ("btn_Tim"))
 		{
 			Bounce(clicked, "Settings");
+			GA.API.Design.NewEvent("Website:timchism.com");
 			Application.OpenURL("http://www.timchism.com/");
 		}
 		if (clicked.name == ("btn_Andrea"))
 		{
 			Bounce(clicked, "Settings");
+			GA.API.Design.NewEvent("Website:andreadailey.com");
 			Application.OpenURL("http://www.andreadailey.com/");
 		}
 	}

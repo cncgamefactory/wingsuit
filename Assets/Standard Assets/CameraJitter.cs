@@ -3,9 +3,16 @@ using System.Collections;
 
 public class CameraJitter : MonoBehaviour {
 	
-	public float ShakeIntensity = .006f; 
+	static public CameraJitter sharedInstance; 
+	
+	public float ShakeIntensity = .004f; 
 	
 	private PlayerLoop pLoop; 
+	
+	void Awake()
+	{
+		sharedInstance = this; 
+	}
 	
 	// Use this for initialization
 	void Start () {

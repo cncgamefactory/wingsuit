@@ -21,6 +21,8 @@ public class BoostLoop : MonoBehaviour {
 			pLoop.AddSpeedBoost(4.5f);
 			Debug.Log("SPEED BOOST!");
 			
+			pLoop.numSpeedBoostersHit++; 
+			
 			for(int i = 0; i < transform.GetChildCount(); i++)
 			{
 				GameObject go = transform.GetChild(i).gameObject;
@@ -28,6 +30,8 @@ public class BoostLoop : MonoBehaviour {
 			}
 			
 			UI_SFX.SharedInstance.Play(UI_SFX.SharedInstance.SFX_BOING);
+
+			GA.API.Design.NewEvent("Boost:Speed",transform.position); 
 
 		}
 	}

@@ -142,6 +142,7 @@ public class UI_Missions : MonoBehaviour {
 		{
 			SpriteText sub = transform.Find("SUBTITLE").GetComponent<SpriteText>(); 
 			sub.Text = "PRESTIGE MODE UNLOCKED!";
+			GA.API.Design.NewEvent("Prestige:Level", PersistentData.mPersistentData.mUserData.PrestigeLevel);
 		}
 	}
 	
@@ -158,6 +159,7 @@ public class UI_Missions : MonoBehaviour {
 			numTransitionsToWaitFor++; 
 			StartCoroutine(TransitionNewMission(prevm1Btn,m1Btn));
 			PersistentData.mPersistentData.mUserData.PrevMission1Id = m1.Id;
+			GA.API.Design.NewEvent("Mission:" + m1.Id);
 			needSave = true; 
 		}
 
@@ -166,6 +168,7 @@ public class UI_Missions : MonoBehaviour {
 			numTransitionsToWaitFor++; 
 			StartCoroutine(TransitionNewMission(prevm2Btn,m2Btn));
 			PersistentData.mPersistentData.mUserData.PrevMission2Id = m2.Id;
+			GA.API.Design.NewEvent("Mission:" + m2.Id);
 			needSave = true; 
 		}
 		
@@ -174,6 +177,7 @@ public class UI_Missions : MonoBehaviour {
 			numTransitionsToWaitFor++; 
 			StartCoroutine(TransitionNewMission(prevm3Btn,m3Btn));
 			PersistentData.mPersistentData.mUserData.PrevMission3Id = m3.Id;
+			GA.API.Design.NewEvent("Mission:" + m3.Id);
 			needSave = true; 
 		}
 		

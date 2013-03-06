@@ -21,10 +21,11 @@ public class MarkerLoop : MonoBehaviour {
 			pLoop.AddHeightBoost(4.5f);
 //			Debug.Log("HEIGHT BOOST!");
 			
-			ParticleSystem ps = transform.Find("Particles").GetComponent<ParticleSystem>(); 
-			ps.startColor = Color.green;
+			pLoop.numHeightBoostersHit++; 
 			
 			UI_SFX.SharedInstance.Play(UI_SFX.SharedInstance.SFX_BOING);
+			
+			GA.API.Design.NewEvent("Boost:Height",transform.position); 
 		}
 	}
 }

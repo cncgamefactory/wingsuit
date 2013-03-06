@@ -6,6 +6,13 @@ public class PlayerLoop : MonoBehaviour {
 	public string mGameState = "MainMenu";
 	private GameLoop loop; 
 	
+	public GameObject spdBoost;
+	public GameObject heightBoost;
+	
+	public GameObject[] ArmTrails; 
+	public GameObject[] LegTrails; 
+	public GameObject HeightParticles;
+	
 	private float heightBoostTimer = 0;
 	private float speedBoostTimer = 0;
 	
@@ -16,6 +23,9 @@ public class PlayerLoop : MonoBehaviour {
 	private float mph = 0;
 	private float distance = 0;
 	private float height = 0; 
+	
+	public int numSpeedBoostersHit = 0;
+	public int numHeightBoostersHit = 0;
 	
 	void Start () 
 	{
@@ -66,6 +76,8 @@ public class PlayerLoop : MonoBehaviour {
 				Vector3 force = constantForce.force;
 				force.y = loop.DEFAULT_Y_FORCE;
 				constantForce.force = force;
+				
+				HandleHeightBoost(false); 
 			}
 			
 			// SPEED!
@@ -84,6 +96,9 @@ public class PlayerLoop : MonoBehaviour {
 				Vector3 force = constantForce.force;
 				force.z = loop.DEFAULT_Z_FORCE;
 				constantForce.force = force;
+
+				HandleSpeedBoost(false); 
+
 			}			
 			
 			mph = rigidbody.velocity.magnitude * 2.237f;
@@ -111,6 +126,9 @@ public class PlayerLoop : MonoBehaviour {
 			UI_PostGame script = pgscreen.GetComponent<UI_PostGame>();
 			script.RefreshScore(mMaxDistance, mMaxSpeed, mMaxHeight);
 	
+			HandleSpeedBoost(false);
+			HandleHeightBoost(false); 
+			
 			// we've displayed the stats to the user now, so we can save them now
 			CheckForHighScores();
 	
@@ -131,6 +149,8 @@ public class PlayerLoop : MonoBehaviour {
 			mMaxDistance = 0; 
 			mMaxHeight = 0; 
 			mMaxSpeed = 0; 
+			numSpeedBoostersHit = 0;
+			numHeightBoostersHit = 0; 
 		}
 	}
 	
@@ -144,6 +164,8 @@ public class PlayerLoop : MonoBehaviour {
 
 			// change game state
 			loop.SwitchState("Limbo");
+			
+			GA.API.Design.NewEvent("GameOver:Crashed", transform.position);
 		}
 	}
 	
@@ -227,13 +249,17 @@ public class PlayerLoop : MonoBehaviour {
 			case "distance":
 				valToCheck = mMaxDistance;
 				break;
-				
 			case "height":
 				valToCheck = mMaxHeight;
 				break;
-			
 			case "speed":
 				valToCheck = mMaxSpeed;
+				break;
+			case "speedboosts":
+				valToCheck = numSpeedBoostersHit;
+				break;
+			case "heightboosts":
+				valToCheck = numHeightBoostersHit;
 				break;
 			
 			default:
@@ -299,14 +325,70 @@ public class PlayerLoop : MonoBehaviour {
 		return completed;
 	}
 	
+	public void Bounce(GameObject obj)
+	{
+		iTween.PunchScale(obj, new Vector3(.5f, .5f, .5f), .5f);
+	}
+	
 	public void AddHeightBoost(float time)
 	{
+		HandleHeightBoost(true); 
 		heightBoostTimer += time; 
 	}
 	
 	public void AddSpeedBoost(float time)
 	{
+		HandleSpeedBoost(true); 
 		speedBoostTimer += time; 
+	}
+	
+	public void ZeroOutSpeedBoost()
+	{
+		speedBoostTimer = 0; 
+		HandleSpeedBoost(false);
+	}
+
+	public void ZeroOutHeightBoost()
+	{
+		heightBoostTimer = 0; 
+		HandleHeightBoost(false); 
+	}
+	
+	private void HandleHeightBoost(bool enabled)
+	{
+		heightBoost.active = enabled; 
+		HeightParticles.active = enabled; 
+
+		if (enabled)
+		{
+			Bounce (heightBoost);
+			CameraJitter.sharedInstance.ShakeIntensity = .007f;
+		}
+		else
+		{
+			CameraJitter.sharedInstance.ShakeIntensity = .004f;
+		}
+		
+	}
+	
+	private void HandleSpeedBoost(bool enabled)
+	{
+		spdBoost.active = enabled; 
+
+		if (enabled)
+		{
+			ArmTrails[0].GetComponent<TrailRenderer>().time = .1f;
+			ArmTrails[1].GetComponent<TrailRenderer>().time = .1f;
+			Bounce (spdBoost);
+			CameraJitter.sharedInstance.ShakeIntensity = .02f;
+		}
+		else
+		{
+			ArmTrails[0].GetComponent<TrailRenderer>().time = .05f;
+			ArmTrails[1].GetComponent<TrailRenderer>().time = .05f;
+			CameraJitter.sharedInstance.ShakeIntensity = .004f;
+		}
+		
 	}
 	
     private string secretKey = "POOhm0ox5^t!$c0vo505c@#i5hk+0f0bsrs!@7pdojf0ymf#2)oPOO"; // Edit this value and make sure it's the same as the one stored on the server

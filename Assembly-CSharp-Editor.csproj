@@ -74,6 +74,19 @@
      <Compile Include="Assets\Editor\AnBSoft\Wizards\SetRenderCamera.cs" />
      <Compile Include="Assets\Editor\AnBSoft\Wizards\SpriteSizer.cs" />
      <Compile Include="Assets\Editor\AnBSoft\Wizards\SpriteTextSizer.cs" />
+     <Compile Include="Assets\GameAnalytics\Editor\GA_DatePicker.cs" />
+     <Compile Include="Assets\GameAnalytics\Editor\GA_EventPicker.cs" />
+     <Compile Include="Assets\GameAnalytics\Editor\GA_ExampleTutorial.cs" />
+     <Compile Include="Assets\GameAnalytics\Editor\GA_HeatMapInspector.cs" />
+     <Compile Include="Assets\GameAnalytics\Editor\GA_HeatMapRendererInspector.cs" />
+     <Compile Include="Assets\GameAnalytics\Editor\GA_Inspector.cs" />
+     <Compile Include="Assets\GameAnalytics\Editor\GA_Menu.cs" />
+     <Compile Include="Assets\GameAnalytics\Editor\GA_SetupWizard.cs" />
+     <Compile Include="Assets\GameAnalytics\Editor\GA_Status.cs" />
+     <Compile Include="Assets\GameAnalytics\Editor\GA_SystemTrackerInspector.cs" />
+     <Compile Include="Assets\GameAnalytics\Editor\GA_TrackerInspector.cs" />
+     <None Include="Assets\Plugins\Webplayer\Readme_WebPlayer.txt" />
+     <None Include="Assets\Plugins\Webplayer\crossdomain.xml" />
      <None Include="Assets\Plugins\AnBSoft Common\Standard Font\Arial, Fancy.txt" />
      <None Include="Assets\Plugins\AnBSoft Common\Standard Shaders\Sprite Vertex Colored, Fast.shader" />
      <None Include="Assets\Standard Assets\WebShit\crossdomain.xml" />
@@ -83,9 +96,16 @@
      <None Include="Assets\Plugins\AnBSoft Common\Standard Shaders\Sprite Cutout.shader" />
      <None Include="Assets\Resources\_Skyboxes\_skybox info.txt" />
      <None Include="Assets\Resources\_Fonts\Permmarker\permmarker.txt" />
+     <None Include="Assets\Plugins\Framework\Shaders\GA_HeatMapTransparentOverlay.shader" />
+     <None Include="Assets\Plugins\Framework\Shaders\GA_HeatMapSolidOverlay.shader" />
      <None Include="Assets\Resources\missions.txt" />
      <None Include="Assets\Resources\_Fonts\Nevis-Big\nevis_bignumbers.txt" />
      <None Include="Assets\Plugins\AnBSoft Common\Standard Shaders\Sprite Vertex Colored.shader" />
+     <None Include="Assets\Plugins\Framework\Shaders\GA_HeatMapSolid.shader" />
+     <None Include="Assets\Plugins\Framework\Shaders\GA_HeatMapTransparent.shader" />
+ <Reference Include="Assets\Plugins\Framework\Using\LitJson">
+ <HintPath>Assets\Plugins\Framework\Using\LitJson.dll</HintPath>
+ </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
