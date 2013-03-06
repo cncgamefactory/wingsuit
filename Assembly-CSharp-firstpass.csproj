@@ -155,6 +155,7 @@
      <Compile Include="Assets\Standard Assets\Helpers\StickToGround.cs" />
      <Compile Include="Assets\Standard Assets\Helpers\UI_SFX.cs" />
      <Compile Include="Assets\Standard Assets\Helpers\UserData.cs" />
+     <Compile Include="Assets\Standard Assets\Helpers\Utils.cs" />
      <Compile Include="Assets\Standard Assets\Screens\UI_Gameplay.cs" />
      <Compile Include="Assets\Standard Assets\Screens\UI_MainMenu.cs" />
      <Compile Include="Assets\Standard Assets\Screens\UI_Missions.cs" />

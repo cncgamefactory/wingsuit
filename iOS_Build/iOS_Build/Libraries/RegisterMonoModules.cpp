@@ -13,6 +13,8 @@ extern "C"
 	void				mono_aot_register_module(gpointer *aot_info);
 	extern gboolean		mono_aot_only;
 	extern gpointer*	mono_aot_module_Assembly_CSharp_firstpass_info; // Assembly-CSharp-firstpass.dll
+	extern gpointer*	mono_aot_module_Assembly_CSharp_info; // Assembly-CSharp.dll
+	extern gpointer*	mono_aot_module_Assembly_UnityScript_info; // Assembly-UnityScript.dll
 	extern gpointer*	mono_aot_module_LitJson_info; // LitJson.dll
 	extern gpointer*	mono_aot_module_Mono_Security_info; // Mono.Security.dll
 	extern gpointer*	mono_aot_module_System_Core_info; // System.Core.dll
@@ -41,6 +43,8 @@ void RegisterMonoModules()
 	mono_aot_only = true;
 	mono_ficall_flag = false;
 	mono_aot_register_module(mono_aot_module_Assembly_CSharp_firstpass_info);
+	mono_aot_register_module(mono_aot_module_Assembly_CSharp_info);
+	mono_aot_register_module(mono_aot_module_Assembly_UnityScript_info);
 	mono_aot_register_module(mono_aot_module_LitJson_info);
 	mono_aot_register_module(mono_aot_module_Mono_Security_info);
 	mono_aot_register_module(mono_aot_module_System_Core_info);
